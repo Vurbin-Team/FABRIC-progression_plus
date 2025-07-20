@@ -20,7 +20,7 @@ public class syncUpgradesOnDeath {
                 .getPlayerUpgrade()
                 .loadUpgrades(PlayerComponents.PLAYER_UPGRADES.get(oldPlayer).getPlayerUpgrade().getUpgrades());
 
-            ModMessages.sendFullSync(newPlayer);
+            ModMessages.onPlayerJoin(newPlayer);
         }
     }
 }
