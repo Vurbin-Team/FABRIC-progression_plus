@@ -2,6 +2,11 @@
   "gui.progression-plus.upgrade_menu": "Upgrade Menu",
   "key.progression-plus.open_menu": "Open Upgrade Menu",
   "category.progression-plus.keys": "Progression+",
+  "itemgroup.progression-plus": "Progression+",
+
+
+
+
 
   "upgrade.progression-plus.level": "Level",
 
@@ -26,5 +31,10 @@
   "indicator.progression-plus.speed_bonus":         "Speed Bonus",
   "indicator.progression-plus.mining_speed_bonus":  "Mining Speed Bonus",
 
-  "upgrade.progression-plus.required_exp": "Next Level Experience"
+  "upgrade.progression-plus.required_exp": "Next Level Experience",
+
+
+
+
+  "item.progression-plus.grand_exp_bottle": "Grand EXP Bottle"
 }

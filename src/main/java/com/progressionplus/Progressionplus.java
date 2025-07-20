@@ -6,6 +6,7 @@ import com.progressionplus.data.PlayerUpgradeData;
 import com.progressionplus.network.ModMessages;
 import com.progressionplus.network.ServerDimensionSwitch;
 import com.progressionplus.playerResistances.DamageEventHandler;
+import com.progressionplus.registry.ModItemGroups;
 import net.fabricmc.api.ModInitializer;
 
 import com.progressionplus.config.UpgradeConfig;
@@ -43,6 +44,8 @@ public class Progressionplus implements ModInitializer {
 		});
 
 		ServerEntityEvents.ENTITY_LOAD.register(ServerDimensionSwitch::Register);
+
+		ModItemGroups.register();
 
 		LOGGER.info("Progression+ initialized successfully!");
 	}
