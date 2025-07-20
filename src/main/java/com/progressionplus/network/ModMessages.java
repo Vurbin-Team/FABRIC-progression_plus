@@ -2,26 +2,24 @@
 
 package com.progressionplus.network;
 
-import com.progressionplus.attributes.ModAttributes;
+import com.progressionplus.Progressionplus;
 import com.progressionplus.config.UpgradeConfig;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.upgrade.UpgradeType;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 public class ModMessages {
     public static final int damage = 1;
     public static final double movement_speed = 0.1;
-    public static final int mining_speed = 1;
+    public static final Identifier ID = Identifier.of(Progressionplus.MOD_ID, "sync_upgrades");
 
     public static void init() {
-        ServerPlayNetworking.registerGlobalReceiver(UpgradePayload.ID, (server, player, handler, buf, responseSender) -> {
+        ServerPlayNetworking.registerGlobalReceiver(ID, (server, player, handler, buf, responseSender) -> {
             UpgradePayload payload = UpgradePayload.read(buf);
 
             server.execute(() -> {
@@ -31,50 +29,50 @@ public class ModMessages {
                 if (playerUpgradeData.getPlayerUpgrade().tryUpgrade(upgradeType, player)) {
                     int upgradeLevel = playerUpgradeData.getPlayerUpgrade().getLevel(upgradeType);
 
-                    handleUpgradeTypeUpgrade(upgradeType, player, upgradeLevel);
+                    handleUpgradeType(upgradeType, player, upgradeLevel);
 
-                    sendUpgradeToClient(player, upgradeType, upgradeLevel);
+                    sendPayload(player, upgradeType, upgradeLevel);
                 }
             });
         });
     }
 
-    public static void sendUpgradeToClient(ServerPlayerEntity player, UpgradeType type, int level) {
+    // Відправляє клієнту пакет з рівнем апгрейду
+    public static void sendPayload(ServerPlayerEntity player, UpgradeType type, int level) {
         PacketByteBuf buf = PacketByteBufs.create();
         new UpgradePayload(type, level, player.getUuid()).write(buf);
-        ServerPlayNetworking.send(player, UpgradePayload.ID, buf);
+        ServerPlayNetworking.send(player, ID, buf);
     }
 
+    // Відправляє всі існуючі апгрейди після входу чи респавну
     public static void sendFullSync(ServerPlayerEntity player) {
-        var upgradeData = PlayerComponents.PLAYER_UPGRADES.get(player);
-        var playerUpgrade = upgradeData.getPlayerUpgrade();
-
+        var data = PlayerComponents.PLAYER_UPGRADES.get(player).getPlayerUpgrade();
         for (UpgradeType type : UpgradeType.values()) {
-            int level = playerUpgrade.getLevel(type);
+            int level = data.getLevel(type);
             if (level > 0) {
-                sendUpgradeToClient(player, type, level);
+                sendPayload(player, type, level);
             }
         }
     }
 
+    // Викликається при вході гравця в світ
     public static void onPlayerJoin(ServerPlayerEntity player) {
-        restorePlayerAttributes(player);
+        restoreAttributes(player);
         sendFullSync(player);
     }
 
-    private static void restorePlayerAttributes(ServerPlayerEntity player) {
-        var upgradeData = PlayerComponents.PLAYER_UPGRADES.get(player);
-        var playerUpgrade = upgradeData.getPlayerUpgrade();
-
+    // Відновлює атрибути гравця на основі збережених даних
+    public static void restoreAttributes(ServerPlayerEntity player) {
+        var data = PlayerComponents.PLAYER_UPGRADES.get(player).getPlayerUpgrade();
         for (UpgradeType type : UpgradeType.values()) {
-            int level = playerUpgrade.getLevel(type);
+            int level = data.getLevel(type);
             if (level > 0) {
-                handleUpgradeTypeUpgrade(type, player, level);
+                handleUpgradeType(type, player, level);
             }
         }
     }
 
-    static void handleUpgradeTypeUpgrade(UpgradeType upgrade, ServerPlayerEntity player, int level) {
+    static void handleUpgradeType(UpgradeType upgrade, ServerPlayerEntity player, int level) {
         switch (upgrade) {
             case ENDURANCE -> {
                 float bonusHealth = UpgradeConfig.getSettings(UpgradeType.ENDURANCE).bonusPerLevel * level;
@@ -83,6 +81,7 @@ public class ModMessages {
                 var healthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
                 if (healthAttribute != null) {
                     healthAttribute.setBaseValue(newMaxHealth);
+                    // Восстанавливаем здоровье до максимума только если текущее здоровье меньше нового максимума
                     if (player.getHealth() < newMaxHealth) {
                         player.setHealth(newMaxHealth);
                     }
@@ -107,6 +106,7 @@ public class ModMessages {
                 }
             }
             case LUCK -> {
+                // Handle LUCK upgrade
                 double bonusLuck = UpgradeConfig.getSettings(UpgradeType.LUCK).bonusPerLevel * level;
 
                 var luckAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_LUCK);
@@ -115,7 +115,7 @@ public class ModMessages {
                 }
             }
             case MINING_SPEED -> {
-                // attribute in mixin
+
             }
         }
     }

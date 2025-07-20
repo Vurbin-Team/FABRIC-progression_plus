@@ -17,10 +17,10 @@ public class syncUpgradesOnDeath {
         if (oldPlayer != null && oldPlayer.getUuid().equals(((ServerPlayerEntity) (Object) this).getUuid())) {
             // get old player's upgrades
             PlayerComponents.PLAYER_UPGRADES.get(newPlayer)
-                .getPlayerUpgrade()
-                .loadUpgrades(PlayerComponents.PLAYER_UPGRADES.get(oldPlayer).getPlayerUpgrade().getUpgrades());
+                    .getPlayerUpgrade()
+                    .loadUpgrades(PlayerComponents.PLAYER_UPGRADES.get(oldPlayer).getPlayerUpgrade().getUpgrades());
 
-            ModMessages.sendFullSync(newPlayer);
+            ModMessages.onPlayerJoin(newPlayer);
         }
     }
 }

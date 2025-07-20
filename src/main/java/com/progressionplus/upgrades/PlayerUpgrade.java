@@ -85,4 +85,9 @@ public class PlayerUpgrade {
             } catch (IllegalArgumentException ignored) {}
         }
     }
+
+    public void copyFrom(PlayerUpgrade playerUpgrade) {
+        this.upgrades.clear();
+        this.upgrades.putAll(playerUpgrade.upgrades);
+    }
 }

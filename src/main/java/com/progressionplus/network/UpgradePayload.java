@@ -8,8 +8,6 @@ import net.minecraft.util.Identifier;
 import java.util.UUID;
 
 public class UpgradePayload {
-    public static final Identifier ID = new Identifier(Progressionplus.MOD_ID, "sync_upgrades");
-
     private final UpgradeType upgradeType;
     private final int level;
     private final UUID playerUuid;

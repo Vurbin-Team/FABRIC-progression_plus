@@ -11,6 +11,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 
 import static com.progressionplus.Progressionplus.LOGGER;
 
+
 public final class PlayerComponents implements EntityComponentInitializer {
     public static final ComponentKey<PlayerUpgradeData> PLAYER_UPGRADES =
             ComponentRegistry.getOrCreate(Identifier.of(Progressionplus.MOD_ID, "upgrades"), PlayerUpgradeData.class);
@@ -18,7 +19,6 @@ public final class PlayerComponents implements EntityComponentInitializer {
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         LOGGER.info("Registering Player Upgrade Data component for Progression+");
-
         registry.beginRegistration(PlayerEntity.class, PLAYER_UPGRADES)
                 .respawnStrategy(RespawnCopyStrategy.ALWAYS_COPY)
                 .impl(PlayerUpgradeData.class)

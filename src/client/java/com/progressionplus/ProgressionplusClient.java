@@ -1,8 +1,10 @@
 package com.progressionplus;
 
+import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.gui.CustomHudRenderer;
 import com.progressionplus.gui.UpgradeMenu;
 import com.progressionplus.network.ClientModMessages;
+import com.progressionplus.upgrade.UpgradeType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -34,7 +36,7 @@ public class ProgressionplusClient implements ClientModInitializer {
 				MinecraftClient.getInstance().setScreen(new UpgradeMenu());
 			}
 		});
-		
+
 		// Initialize client-side networking
 		ClientModMessages.initClient();
 	}
