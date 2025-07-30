@@ -4,9 +4,9 @@
   "category.progression-plus.keys": "Progression+",
   "itemgroup.progression-plus": "Progression+",
 
-
-
-
+  "modmenu.nameTranslation.progression-plus": "Progression+",
+  "modmenu.descriptionTranslation.progression-plus": "Мод, що додає систему апгрейдів для таких атрибутів гравця, як здоров'я, урон, швидкість, швидкість добування.",
+  "modmenu.summaryTranslation.progression-plus": "Налаштуйте свої прокачування тут!",
 
   "upgrade.progression-plus.level": "Рівень",
 
@@ -33,8 +33,46 @@
 
   "upgrade.progression-plus.required_exp": "Наст. рівень",
 
+  "item.progression-plus.grand_exp_bottle": "Великий бутиль досвіду",
+  "item.progression-plus.deepslate_titanium_ore_block": "Блок глибокошарового титанової руди",
+  "item.progression-plus.raw_titanium_ore": "Необроблений титан",
+  "item.progression-plus.titanium_ingot": "Титановий злиток",
+  "item.progression-plus.titanium_helmet": "Титановий шолом",
+  "item.progression-plus.titanium_chestplate": "Титановий нагрудник",
+  "item.progression-plus.titanium_leggings": "Титанові наголівники",
+  "item.progression-plus.titanium_boots": "Титанові чоботи",
+  "item.progression-plus.titanium_sword": "Титановий меч",
+  "item.progression-plus.titanium_axe": "Титанова сокира",
+  "item.progression-plus.titanium_pickaxe": "Титанове кайло",
+  "item.progression-plus.titanium_shovel": "Титанова лопата",
+  "item.progression-plus.titanium_hoe": "Титанові граблі",
+  "item.progression-plus.deepslate_handle": "Ручка з глибокошарового сланцю",
+  "item.progression-plus.yellow_skint_crystal_shard_2": "Кристал скинта",
+  "item.progression-plus.yellow_skint_block": "Блок скинта",
+  "item.progression-plus.yellow_skint_crystal": "Кластер скинта",
+  "item.progression-plus.skint_bricks": "Скинтова цегла",
+  "item.progression-plus.experience_storage_pedestal": "П'єдестал для зберігання досвіду",
 
+  "advancement.progression-plus.grand_exp_bottle_recipe.title": "Великий бутиль досвіду",
+  "advancement.progression-plus.grand_exp_bottle_recipe.description": "Створіть великий бутиль досвіду",
 
+  "sounds.progression-plus.button_upgrade": "Звук кнопки прокачки",
 
-  "item.progression-plus.grand_exp_bottle": "Великий бутиль досвіду"
+  "block.progression-plus.deepslate_titanium_ore_block": "Блок глибокошарового титанової руди",
+
+  "message.progression-plus.experience_stored": "Досвід збережено: ",
+  "message.progression-plus.experience_retrieved": "Ви отримали досвід!",
+  "message.progression-plus.need_skint": "Потрібен скинт для зберігання досвіду!",
+  "message.progression-plus.only_skint": "Можна впихнути тільки скинт!",
+
+  "config.progression-plus.base_cost": "Базова ціна",
+  "config.progression-plus.level_multiplier": "Множник",
+  "config.progression-plus.max_upgrade_level": "Макс. рівень прок.",
+  "config.progression-plus.upgrade": "Прокачка",
+  "config.progression-plus.multiplier": "Множник",
+  "config.progression-plus.resistance": "Захист",
+  "config.progression-plus.save_button": "Зберегти",
+  "config.progression-plus.hud_position_button": "Позиція лічильника",
+  "config.progression-plus.bonus_prefix": "_бонус",
+  "config.progression-plus.resistance_prefix": "_захист"
 }

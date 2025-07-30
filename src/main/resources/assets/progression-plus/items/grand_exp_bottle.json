@@ -1,6 +1,23 @@
 {
 	"model": {
-		"type": "model",
-		"model": "progression-plus:item/grand_exp_bottle"
+		"type": "minecraft:select",
+		"cases": [
+			{
+				"model": {
+					"type": "minecraft:model",
+					"model": "progression-plus:item/grand_exp_bottle"
+				},
+				"when": [
+					"gui",
+					"ground",
+					"fixed"
+				]
+			}
+		],
+		"fallback": {
+			"type": "minecraft:model",
+			"model": "progression-plus:item/grand_exp_bottle_3d"
+		},
+		"property": "minecraft:display_context"
 	}
 }

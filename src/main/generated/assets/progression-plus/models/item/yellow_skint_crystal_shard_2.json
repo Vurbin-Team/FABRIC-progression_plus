@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "progression-plus:item/yellow_skint_crystal_shard_2"
+  }
+}

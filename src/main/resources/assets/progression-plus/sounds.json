@@ -1,0 +1,8 @@
+{
+  "button_upgrade": {
+    "subtitle": "sounds.progression-plus.button_upgrade",
+    "sounds": [
+      "progression-plus:button_upgrade"
+    ]
+  }
+}

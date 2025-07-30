@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "progression-plus:yellow_skint_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_yellow_skint_crystal_shard_2": {
+      "conditions": {
+        "items": [
+          {
+            "items": "progression-plus:yellow_skint_crystal_shard_2"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_yellow_skint_crystal_shard_2"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "progression-plus:yellow_skint_block"
+    ]
+  }
+}

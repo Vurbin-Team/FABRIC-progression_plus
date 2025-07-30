@@ -10,6 +10,7 @@ public class UpgradeConfig {
     public static final Map<UpgradeType, UpgradeSettings> UPGRADE_SETTINGS = new EnumMap<>(UpgradeType.class);
     private static int BASE_COST = 100;
     private static int LEVEL_MULTIPLIER = 50;
+    private static int MAX_UPGRADE_LEVEL = 20;
 
     public static void init() {
         // За замовчуванням
@@ -31,9 +32,22 @@ public class UpgradeConfig {
     public static void setBaseCost(int baseCost) {
         BASE_COST = baseCost;
     }
+    public static int getBaseCost() {
+        return BASE_COST;
+    }
+
+    public static void setMaxUpgradeLevel(int maxUpgradeLevel) {
+        MAX_UPGRADE_LEVEL = maxUpgradeLevel;
+    }
+    public static int getMaxUpgradeLevel(){
+        return MAX_UPGRADE_LEVEL;
+    }
 
     public static void setLevelMultiplier(int levelMultiplier) {
         LEVEL_MULTIPLIER = levelMultiplier;
+    }
+    public static int getLevelMultiplier() {
+        return LEVEL_MULTIPLIER;
     }
 
     public static class UpgradeSettings {

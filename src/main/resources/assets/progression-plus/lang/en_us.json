@@ -4,8 +4,9 @@
   "category.progression-plus.keys": "Progression+",
   "itemgroup.progression-plus": "Progression+",
 
-
-
+  "modmenu.nameTranslation.progression-plus": "Progression+",
+  "modmenu.descriptionTranslation.progression-plus": "Mod that adds an upgrade system for player attributes like: health, damage, speed, mining speed.",
+  "modmenu.summaryTranslation.progression-plus": "Customize your upgrades here!",
 
 
   "upgrade.progression-plus.level": "Level",
@@ -33,8 +34,47 @@
 
   "upgrade.progression-plus.required_exp": "Next Level Experience",
 
+  "item.progression-plus.grand_exp_bottle": "Grand EXP Bottle",
+  "item.progression-plus.deepslate_titanium_ore_block": "Deepslate Titanium Ore Block",
+  "item.progression-plus.raw_titanium_ore": "Raw Titanium Ore",
+  "item.progression-plus.titanium_ingot": "Titanium Ingot",
+  "item.progression-plus.titanium_helmet": "Titanium Helmet",
+  "item.progression-plus.titanium_chestplate": "Titanium Chestplate",
+  "item.progression-plus.titanium_leggings": "Titanium Leggings",
+  "item.progression-plus.titanium_boots": "Titanium Boots",
+  "item.progression-plus.titanium_sword": "Titanium Sword",
+  "item.progression-plus.titanium_axe": "Titanium Axe",
+  "item.progression-plus.titanium_pickaxe": "Titanium Pickaxe",
+  "item.progression-plus.titanium_shovel": "Titanium Shovel",
+  "item.progression-plus.titanium_hoe": "Titanium Hoe",
+  "item.progression-plus.deepslate_handle": "Deepslate Handle",
+  "item.progression-plus.yellow_skint_crystal_shard_2": "Skint Crystal Shard",
+  "item.progression-plus.experience_storage_pedestal": "Experience Storage Pedestal",
 
+  "item.progression-plus.yellow_skint_block": "Skint Block",
+  "item.progression-plus.yellow_skint_crystal": "Skint Crystal",
+  "item.progression-plus.skint_bricks": "Skint Bricks",
 
+  "advancement.progression-plus.grand_exp_bottle_recipe.title": "Grand EXP Bottle Recipe",
+  "advancement.progression-plus.grand_exp_bottle_recipe.description": "Unlock the Grand EXP Bottle recipe",
 
-  "item.progression-plus.grand_exp_bottle": "Grand EXP Bottle"
+  "sounds.progression-plus.button_upgrade": "Button Upgrade Sound",
+
+  "block.progression-plus.deepslate_titanium_ore_block": "Deepslate Titanium Ore Block",
+
+  "message.progression-plus.experience_stored": "Experience stored: ",
+  "message.progression-plus.experience_retrieved": "Experience retrieved!",
+  "message.progression-plus.need_skint": "Need skint to store experience!",
+  "message.progression-plus.only_skint": "Only skint crystal shards can be placed here!",
+
+  "config.progression-plus.base_cost": "Base Cost",
+  "config.progression-plus.level_multiplier": "Level Multiplier",
+  "config.progression-plus.max_upgrade_level": "Max Upgrade Level",
+  "config.progression-plus.upgrade": "Upgrade",
+  "config.progression-plus.multiplier": "Multiplier",
+  "config.progression-plus.resistance": "Resistance",
+  "config.progression-plus.save_button": "Save",
+  "config.progression-plus.hud_position_button": "HUD Position",
+  "config.progression-plus.bonus_prefix": "_bonus",
+  "config.progression-plus.resistance_prefix": "_resistance"
 }

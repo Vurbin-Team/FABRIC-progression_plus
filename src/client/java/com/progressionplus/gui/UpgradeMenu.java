@@ -4,17 +4,17 @@ import com.progressionplus.Progressionplus;
 import com.progressionplus.config.UpgradeConfig;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.network.ClientModMessages;
+import com.progressionplus.sounds.ModSounds;
 import com.progressionplus.upgrade.UpgradeType;
 import com.progressionplus.upgrades.PlayerUpgrade;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -115,6 +115,9 @@ public class UpgradeMenu extends Screen {
     private ButtonWidget createUpgradeButton(UpgradeType type, int x, int y, int buttonSize) {
         ButtonWidget button = new TexturedButtonWidget(x, y, buttonSize, buttonSize, BUTTON_TEXTURES, btn -> {
             ClientModMessages.sendSyncPacketToServer(type, client.player);
+
+            // Звук при нажатии кнопки
+            client.getSoundManager().play(PositionedSoundInstance.master(ModSounds.BUTTON_UPGRADE, 1.0F));
 
             // Обновляем состояние всех кнопок
             updateButtonStates();
@@ -256,7 +259,7 @@ public class UpgradeMenu extends Screen {
     //  ---------------------  render defense stats  ---------------------
     private record DefenseInfo(String translationKey, int xOffset, int yOffset, float resistancePerLevel, int upgradeLevel) {}
     private void renderDefense(DrawContext context, float adjustedX, float adjustedY, DefenseInfo info) {
-        boolean isMaxLevel = info.upgradeLevel() == PlayerUpgrade.getMaxLevel();
+        boolean isMaxLevel = info.upgradeLevel() == UpgradeConfig.getMaxUpgradeLevel();
 
         int resistencePerLevel = (int)(info.resistancePerLevel() * 100);
         int pracentage = resistencePerLevel * info.upgradeLevel();

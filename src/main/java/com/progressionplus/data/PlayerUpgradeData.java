@@ -56,9 +56,6 @@ public class PlayerUpgradeData implements Component, RespawnableComponent {
             }
 
             playerUpgrade.loadUpgrades(upgrades);
-
-            LOGGER.info("LOADING upgrades FROM NBT");
-            logUpgrades(player);
         }
     }
 
@@ -71,8 +68,5 @@ public class PlayerUpgradeData implements Component, RespawnableComponent {
         }
 
         nbtCompound.putString(UPGRADE_KEY.toString(), "upgrades");
-
-        LOGGER.info("Saving upgrades TO NBT");
-        logUpgrades(player);
     }
 }

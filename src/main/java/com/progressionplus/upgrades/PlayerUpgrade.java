@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class PlayerUpgrade {
     private final Map<UpgradeType, Integer> upgrades = new EnumMap<>(UpgradeType.class);
-    private static final int MAX_LEVEL = 20;
 
     public void addLevel(UpgradeType upgradeType) {
         upgrades.put(upgradeType, upgrades.getOrDefault(upgradeType, 0) + 1);
@@ -28,10 +27,6 @@ public class PlayerUpgrade {
         return UpgradeConfig.getSettings(upgradeType).resistancePerLevel;
     }
 
-    public static int getMaxLevel(){
-        return MAX_LEVEL;
-    }
-
     public int getTotalLevels() {
         return upgrades.values().stream().mapToInt(Integer::intValue).sum();
     }
@@ -42,7 +37,7 @@ public class PlayerUpgrade {
 
     public boolean canUpgrade(UpgradeType upgradeType, ServerPlayerEntity player) {
         int currentLevel = getLevel(upgradeType);
-        if (currentLevel >= MAX_LEVEL) {
+        if (currentLevel >= UpgradeConfig.getMaxUpgradeLevel()) {
             return false;
         }
 
