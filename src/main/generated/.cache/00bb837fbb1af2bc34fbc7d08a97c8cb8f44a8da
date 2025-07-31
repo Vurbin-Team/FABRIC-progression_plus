@@ -1,8 +1,9 @@
-// 1.21.5	-999999999-01-01T00:00:00	progression-plus/TutorialMod Recipes
+// 1.21.5	-999999999-01-01T00:00:00	progression-plus/Progression+ Recipes
 f3af7e65f92be751bd67505a006ca0f2bed7a7f6 data/progression-plus/advancement/recipes/misc/deepslate_handle.json
-df64db0c2ed12c50573fbc8fa1ad5f29cccb3d99 data/progression-plus/advancement/recipes/misc/experience_storage_pedestal.json
+ddedbd624a9076db24eb95d20d9ba446c025b80a data/progression-plus/advancement/recipes/misc/experience_storage_pedestal.json
 12f927c12e8d581dad9cdd98988bb36b41f84af0 data/progression-plus/advancement/recipes/misc/grand_exp_bottle.json
 cb76e04ac8b12026eb7c5b976fd49442d6a4b6e4 data/progression-plus/advancement/recipes/misc/skint_bricks.json
+ba98583b049bb908bab25c499f41263ad14ee906 data/progression-plus/advancement/recipes/misc/skint_core.json
 80473f661df459fc65bc43a60f5cf4e5cd431b16 data/progression-plus/advancement/recipes/misc/titanium_axe.json
 e7c29861076c18f86afa3adb44f203b4d175a407 data/progression-plus/advancement/recipes/misc/titanium_block.json
 852e4bf03598531e7ae4908cddbfc934efb59a4e data/progression-plus/advancement/recipes/misc/titanium_boots.json
@@ -22,6 +23,7 @@ aa7bbad917fa3a4d6d5a9281ac26f42905325dd9 data/progression-plus/advancement/recip
 bf1e158cb1e164c9911f1f1d17be7a77d11efc47 data/progression-plus/recipe/experience_storage_pedestal.json
 f23a385574f64793809b8cbb587905cfe2b2cd00 data/progression-plus/recipe/grand_exp_bottle.json
 a6600d56c4aeb7ef4ac6e79ab650c97edff342e4 data/progression-plus/recipe/skint_bricks.json
+801c920cb665eb7f7846d30ed04cd7caf77864a2 data/progression-plus/recipe/skint_core.json
 cf66623ad3c2c9d9d7f033dd6a62acbc634e9729 data/progression-plus/recipe/titanium_axe.json
 05f715151edd9ddb908049e549fd5e74df5142f8 data/progression-plus/recipe/titanium_block.json
 0c7713551a5c23263149eb6843ca5ace147dd41e data/progression-plus/recipe/titanium_boots.json

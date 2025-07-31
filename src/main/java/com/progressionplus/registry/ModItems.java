@@ -2,6 +2,7 @@ package com.progressionplus.registry;
 
 import com.progressionplus.Progressionplus;
 import com.progressionplus.registry.armor.CustomArmorMaterial;
+import com.progressionplus.registry.items.ChargedTitaniumSwordItem;
 import com.progressionplus.registry.items.GrandExpBottleItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
@@ -32,6 +33,9 @@ public class ModItems {
             Item::new, new Settings());
     public static final Item DEEPSLATE_HANDLE = register("deepslate_handle",
             Item::new, new Settings());
+    public static final Item SKINT_CORE = register("skint_core",
+            Item::new, new Settings());
+
 
     public static final Item YELLOW_SKINT_CRYSTAL_SHARD_2 = register("yellow_skint_crystal_shard_2",
             Item::new, new Settings());
@@ -49,6 +53,8 @@ public class ModItems {
 
     public static final Item TITANIUM_SWORD = registerItem("titanium_sword",
             setting -> new Item(setting.sword(ModToolMaterials.TITANIUM, 3, -2.4f)));
+    public static final Item CHARGED_TITANIUM_SWORD = registerItem("charged_titanium_sword",
+            setting -> new ChargedTitaniumSwordItem(setting.sword(ModToolMaterials.TITANIUM, 4, -2.4f)));
     public static final Item TITANIUM_PICKAXE = registerItem("titanium_pickaxe",
             setting -> new Item(setting.pickaxe(ModToolMaterials.TITANIUM, 1, -2.8f)));
     public static final Item TITANIUM_SHOVEL = registerItem("titanium_shovel",
@@ -57,8 +63,6 @@ public class ModItems {
             setting -> new AxeItem(ModToolMaterials.TITANIUM, 5, -3.2f, setting));
     public static final Item TITANIUM_HOE = registerItem("titanium_hoe",
             setting -> new HoeItem(ModToolMaterials.TITANIUM, 0, -3f, setting));
-
-
 
     public static Item register(String path, Function<Settings, Item> factory, Item.Settings settings) {
         final RegistryKey<Item> registryKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Progressionplus.MOD_ID, path));

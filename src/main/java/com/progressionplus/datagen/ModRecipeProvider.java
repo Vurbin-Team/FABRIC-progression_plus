@@ -29,8 +29,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
                 offerSmelting(PINK_GARNET_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 10f, 200, "titanium_ingot");
                 offerBlasting(PINK_GARNET_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 10f, 100, "titanium_ingot");
-//
-//                offerReversibleCompactingRecipes(RecipeCategory.BUILDING_BLOCKS, ModItems.PINK_GARNET, RecipeCategory.DECORATIONS, ModBlocks.PINK_GARNET_BLOCK);
 
                 createShaped(RecipeCategory.MISC, ModItems.DEEPSLATE_HANDLE)
                         .pattern("R")
@@ -169,6 +167,19 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .input('B', Items.GLASS_BOTTLE)
                         .input('T', ModBlocks.TITANIUM_BLOCK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
+                        .criterion(hasItem(Blocks.DEEPSLATE_BRICKS), conditionsFromItem(Blocks.DEEPSLATE_BRICKS))
+                        .criterion(hasItem(Items.GLASS_BOTTLE), conditionsFromItem(Items.GLASS_BOTTLE))
+                        .criterion(hasItem(ModBlocks.TITANIUM_BLOCK), conditionsFromItem(ModBlocks.TITANIUM_BLOCK))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.MISC, ModItems.SKINT_CORE)
+                        .pattern(" # ")
+                        .pattern("#R#")
+                        .pattern(" # ")
+                        .input('#', Items.DEEPSLATE_BRICKS)
+                        .input('R', ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2)
+                        .criterion(hasItem(Items.DEEPSLATE_BRICKS), conditionsFromItem(Items.DEEPSLATE_BRICKS))
+                        .criterion(hasItem(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2), conditionsFromItem(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2))
                         .offerTo(exporter);
             }
         };
@@ -176,6 +187,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public String getName() {
-        return "TutorialMod Recipes";
+        return "Progression+ Recipes";
     }
 }

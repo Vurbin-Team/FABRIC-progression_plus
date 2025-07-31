@@ -50,10 +50,12 @@
   "item.progression-plus.deepslate_handle": "Deepslate Handle",
   "item.progression-plus.yellow_skint_crystal_shard_2": "Skint Crystal Shard",
   "item.progression-plus.experience_storage_pedestal": "Experience Storage Pedestal",
-
   "item.progression-plus.yellow_skint_block": "Skint Block",
   "item.progression-plus.yellow_skint_crystal": "Skint Crystal",
   "item.progression-plus.skint_bricks": "Skint Bricks",
+  "item.progression-plus.titanium_block": "Titanium Block",
+  "item.progression-plus.charged_titanium_sword": "Charged Titanium Sword",
+  "item.progression-plus.skint_core": "Skint Core",
 
   "advancement.progression-plus.grand_exp_bottle_recipe.title": "Grand EXP Bottle Recipe",
   "advancement.progression-plus.grand_exp_bottle_recipe.description": "Unlock the Grand EXP Bottle recipe",

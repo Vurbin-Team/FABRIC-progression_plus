@@ -12,8 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import static net.minecraft.item.Items.GLASS_BOTTLE;
-
 public class GrandExpBottleItem extends Item {
     public GrandExpBottleItem(Settings settings) {
         super(settings);

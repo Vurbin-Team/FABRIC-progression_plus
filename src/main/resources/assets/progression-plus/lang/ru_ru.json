@@ -49,10 +49,12 @@
   "item.progression-plus.deepslate_handle": "Ручка из глубинного сланца",
   "item.progression-plus.yellow_skint_crystal_shard_2": "Кристалл скинта",
   "item.progression-plus.experience_storage_pedestal": "Пьедестал для хранения опыт",
-
+  "item.progression-plus.titanium_block": "Титановый блок",
   "item.progression-plus.yellow_skint_block": "Блок скинта",
   "item.progression-plus.yellow_skint_crystal": "Кластер скинта",
   "item.progression-plus.skint_bricks": "Скинтовый кирпич",
+  "item.progression-plus.charged_titanium_sword": "Заряженый титановый меч",
+  "item.progression-plus.skint_core": "Скинтовое ядро",
 
   "advancement.progression-plus.grand_exp_bottle_recipe.title": "Большая бутылка опыта",
   "advancement.progression-plus.grand_exp_bottle_recipe.description": "Создайте большую бутылку опыта.",

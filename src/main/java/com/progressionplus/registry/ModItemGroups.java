@@ -41,6 +41,8 @@ public class ModItemGroups {
                             entries.add(ModItems.TITANIUM_HOE);
                             entries.add(ModItems.DEEPSLATE_HANDLE);
                             entries.add(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2);
+                            entries.add(ModItems.CHARGED_TITANIUM_SWORD);
+                            entries.add(ModItems.SKINT_CORE);
                         })
                         .build()
         );
