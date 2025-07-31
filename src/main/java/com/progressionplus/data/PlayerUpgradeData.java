@@ -55,9 +55,6 @@ public class PlayerUpgradeData implements Component, CopyableComponent<PlayerUpg
             }
 
             playerUpgrade.loadUpgrades(upgrades);
-
-            LOGGER.info("LOADING upgrades FROM NBT");
-            logUpgrades(player);
         }
     }
 
@@ -70,9 +67,6 @@ public class PlayerUpgradeData implements Component, CopyableComponent<PlayerUpg
         }
 
         nbtCompound.putString(UPGRADE_KEY.toString(), "upgrades");
-
-        LOGGER.info("Saving upgrades TO NBT");
-        logUpgrades(player);
     }
 
     @Override

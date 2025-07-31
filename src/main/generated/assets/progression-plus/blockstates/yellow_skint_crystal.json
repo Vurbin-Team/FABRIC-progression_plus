@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "progression-plus:block/yellow_skint_crystal",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "progression-plus:block/yellow_skint_crystal",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "progression-plus:block/yellow_skint_crystal",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "progression-plus:block/yellow_skint_crystal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "progression-plus:block/yellow_skint_crystal"
+    },
+    "facing=west": {
+      "model": "progression-plus:block/yellow_skint_crystal",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

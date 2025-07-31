@@ -3,6 +3,11 @@
   "key.progression-plus.open_menu": "Открыть меню прокачки",
   "category.progression-plus.keys": "Progression+",
   "attribute.name.generic.mining_speed": "Скорость добычи",
+  "itemgroup.progression-plus": "Progression+",
+
+  "modmenu.nameTranslation.progression-plus": "Progression+",
+  "modmenu.descriptionTranslation.progression-plus": "Мод, добавляющий систему апгрейдов для таких атрибутов игрока, как здоровье, урон, скорость, скорость добычи.",
+  "modmenu.summaryTranslation.progression-plus": "Настройте свои прокачки тут!",
 
   "upgrade.progression-plus.level": "Уровень",
 
@@ -16,16 +21,62 @@
   "upgrade.progression-plus.indicators": "Показатели",
   "upgrade.progression-plus.defense": "Защита",
 
-  "defense.progression-plus.endurance_health_bonus":  "Физический урона",
-  "defense.progression-plus.strength_damage_bonus":   "Взрывной урон",
-  "defense.progression-plus.agility_deffense_bonus":  "Отравление",
-  "defense.progression-plus.luck_bonus":              "Магический урон",
-  "defense.progression-plus.mining_speed_bonus":      "Горение",
+  "defense.progression-plus.endurance_health_bonus": "Физический урона",
+  "defense.progression-plus.strength_damage_bonus": "Взрывной урон",
+  "defense.progression-plus.agility_deffense_bonus": "Отравление",
+  "defense.progression-plus.luck_bonus": "Магический урон",
+  "defense.progression-plus.mining_speed_bonus": "Горение",
 
-  "indicator.progression-plus.hp_bonus":            "Здоровье",
-  "indicator.progression-plus.damage_bonus":        "Бонус к урону",
-  "indicator.progression-plus.speed_bonus":         "Бонус к скорости",
-  "indicator.progression-plus.mining_speed_bonus":  "Бонус к скорости добычи",
+  "indicator.progression-plus.hp_bonus": "Здоровье",
+  "indicator.progression-plus.damage_bonus": "Бонус к урону",
+  "indicator.progression-plus.speed_bonus": "Бонус к скорости",
+  "indicator.progression-plus.mining_speed_bonus": "Бонус к скорости добычи",
 
-  "upgrade.progression-plus.required_exp": "След. уровень"
+  "upgrade.progression-plus.required_exp": "След. уровень",
+
+  "item.progression-plus.grand_exp_bottle": "Большая бутылка опыта",
+  "item.progression-plus.deepslate_titanium_ore_block": "Блок глубинного титана",
+  "item.progression-plus.raw_titanium_ore": "Рудный титан",
+  "item.progression-plus.titanium_ingot": "Титановый слиток",
+  "item.progression-plus.titanium_helmet": "Титановый шлем",
+  "item.progression-plus.titanium_chestplate": "Титановый нагрудник",
+  "item.progression-plus.titanium_leggings": "Титановые поножи",
+  "item.progression-plus.titanium_boots": "Титановые ботинки",
+  "item.progression-plus.titanium_sword": "Титановый меч",
+  "item.progression-plus.titanium_axe": "Титановый топор",
+  "item.progression-plus.titanium_pickaxe": "Титановая кирка",
+  "item.progression-plus.titanium_shovel": "Титановая лопата",
+  "item.progression-plus.titanium_hoe": "Титановая мотыга",
+  "item.progression-plus.deepslate_handle": "Ручка из глубинного сланца",
+  "item.progression-plus.yellow_skint_crystal_shard_2": "Кристалл скинта",
+  "item.progression-plus.experience_storage_pedestal": "Пьедестал для хранения опыт",
+  "item.progression-plus.titanium_block": "Титановый блок",
+  "item.progression-plus.yellow_skint_block": "Блок скинта",
+  "item.progression-plus.yellow_skint_crystal": "Кластер скинта",
+  "item.progression-plus.skint_bricks": "Скинтовый кирпич",
+  "item.progression-plus.charged_titanium_sword": "Заряженый титановый меч",
+  "item.progression-plus.skint_core": "Скинтовое ядро",
+
+  "advancement.progression-plus.grand_exp_bottle_recipe.title": "Большая бутылка опыта",
+  "advancement.progression-plus.grand_exp_bottle_recipe.description": "Создайте большую бутылку опыта.",
+
+  "sounds.progression-plus.button_upgrade": "Звук кнопки прокачки",
+
+  "block.progression-plus.deepslate_titanium_ore_block": "Блок глубинного титана",
+
+  "message.progression-plus.experience_stored": "Сохранено опыта: ",
+  "message.progression-plus.experience_retrieved": "Опыт получен!",
+  "message.progression-plus.need_skint": "Нужен скинт для хранения опыта!",
+  "message.progression-plus.only_skint": "Можно положить только скинт!",
+
+  "config.progression-plus.base_cost": "Баз. стоимость",
+  "config.progression-plus.level_multiplier": "Множитель",
+  "config.progression-plus.max_upgrade_level": "Макс. уровень улуч.",
+  "config.progression-plus.upgrade": "Улучшения",
+  "config.progression-plus.multiplier": "множитель",
+  "config.progression-plus.resistance": "Защита",
+  "config.progression-plus.save_button": "Сохранить",
+  "config.progression-plus.hud_position_button": "Позиция счетчика",
+  "config.progression-plus.bonus_prefix": "_бонус",
+  "config.progression-plus.resistance_prefix": "_защита"
 }

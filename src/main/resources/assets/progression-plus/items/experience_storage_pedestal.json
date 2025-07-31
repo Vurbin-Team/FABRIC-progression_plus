@@ -1,0 +1,6 @@
+{
+	"model": {
+		"type": "minecraft:model",
+		"model": "progression-plus:block/experience_storage_pedestal"
+	}
+}

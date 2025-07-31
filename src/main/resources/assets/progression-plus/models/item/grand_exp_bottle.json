@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "progression-plus:item/grand_exp_bottle_2d_sprite"
+	}
+}

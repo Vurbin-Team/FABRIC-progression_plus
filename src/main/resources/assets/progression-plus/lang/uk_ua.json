@@ -3,6 +3,11 @@
   "key.progression-plus.open_menu": "Відкрити меню прокачки",
   "category.progression-plus.keys": "Progression+",
   "attribute.name.generic.mining_speed": "Швидкість добування",
+  "itemgroup.progression-plus": "Progression+",
+
+  "modmenu.nameTranslation.progression-plus": "Progression+",
+  "modmenu.descriptionTranslation.progression-plus": "Мод, що додає систему апгрейдів для таких атрибутів гравця, як здоров'я, урон, швидкість, швидкість добування.",
+  "modmenu.summaryTranslation.progression-plus": "Налаштуйте свої прокачування тут!",
 
   "upgrade.progression-plus.level": "Рівень",
 
@@ -16,16 +21,62 @@
   "upgrade.progression-plus.indicators": "Показники",
   "upgrade.progression-plus.defense": "Захист",
 
-  "defense.progression-plus.endurance_health_bonus":  "Фізична шкода",
-  "defense.progression-plus.strength_damage_bonus":   "Вибухова шкода",
-  "defense.progression-plus.agility_deffense_bonus":  "Отруєння",
-  "defense.progression-plus.luck_bonus":              "Магічна шкода",
-  "defense.progression-plus.mining_speed_bonus":      "Горіння",
+  "defense.progression-plus.endurance_health_bonus": "Фізична шкода",
+  "defense.progression-plus.strength_damage_bonus": "Вибухова шкода",
+  "defense.progression-plus.agility_deffense_bonus": "Отруєння",
+  "defense.progression-plus.luck_bonus": "Магічна шкода",
+  "defense.progression-plus.mining_speed_bonus": "Горіння",
 
-  "indicator.progression-plus.hp_bonus":            "Здоров'я",
-  "indicator.progression-plus.damage_bonus":        "До шкоди",
-  "indicator.progression-plus.speed_bonus":         "До швидкості",
-  "indicator.progression-plus.mining_speed_bonus":  "До швидкості добування",
+  "indicator.progression-plus.hp_bonus": "Здоров'я",
+  "indicator.progression-plus.damage_bonus": "До шкоди",
+  "indicator.progression-plus.speed_bonus": "До швидкості",
+  "indicator.progression-plus.mining_speed_bonus": "До швидкості добування",
 
-  "upgrade.progression-plus.required_exp": "Наст. рівень"
+  "upgrade.progression-plus.required_exp": "Наст. рівень",
+
+  "item.progression-plus.grand_exp_bottle": "Великий бутиль досвіду",
+  "item.progression-plus.deepslate_titanium_ore_block": "Блок глибокошарового титанової руди",
+  "item.progression-plus.raw_titanium_ore": "Необроблений титан",
+  "item.progression-plus.titanium_ingot": "Титановий злиток",
+  "item.progression-plus.titanium_helmet": "Титановий шолом",
+  "item.progression-plus.titanium_chestplate": "Титановий нагрудник",
+  "item.progression-plus.titanium_leggings": "Титанові наголівники",
+  "item.progression-plus.titanium_boots": "Титанові чоботи",
+  "item.progression-plus.titanium_sword": "Титановий меч",
+  "item.progression-plus.titanium_axe": "Титанова сокира",
+  "item.progression-plus.titanium_pickaxe": "Титанове кайло",
+  "item.progression-plus.titanium_shovel": "Титанова лопата",
+  "item.progression-plus.titanium_hoe": "Титанові граблі",
+  "item.progression-plus.deepslate_handle": "Ручка з глибокошарового сланцю",
+  "item.progression-plus.yellow_skint_crystal_shard_2": "Кристал скинта",
+  "item.progression-plus.yellow_skint_block": "Блок скинта",
+  "item.progression-plus.yellow_skint_crystal": "Кластер скинта",
+  "item.progression-plus.skint_bricks": "Скинтова цегла",
+  "item.progression-plus.experience_storage_pedestal": "П'єдестал для зберігання досвіду",
+  "item.progression-plus.titanium_block": "Титановий блок",
+  "item.progression-plus.charged_titanium_sword": "Заряджений титановий меч",
+  "item.progression-plus.skint_core": "Скинтове ядро",
+
+  "advancement.progression-plus.grand_exp_bottle_recipe.title": "Великий бутиль досвіду",
+  "advancement.progression-plus.grand_exp_bottle_recipe.description": "Створіть великий бутиль досвіду",
+
+  "sounds.progression-plus.button_upgrade": "Звук кнопки прокачки",
+
+  "block.progression-plus.deepslate_titanium_ore_block": "Блок глибокошарового титанової руди",
+
+  "message.progression-plus.experience_stored": "Досвід збережено: ",
+  "message.progression-plus.experience_retrieved": "Ви отримали досвід!",
+  "message.progression-plus.need_skint": "Потрібен скинт для зберігання досвіду!",
+  "message.progression-plus.only_skint": "Можна впихнути тільки скинт!",
+
+  "config.progression-plus.base_cost": "Базова ціна",
+  "config.progression-plus.level_multiplier": "Множник",
+  "config.progression-plus.max_upgrade_level": "Макс. рівень прок.",
+  "config.progression-plus.upgrade": "Прокачка",
+  "config.progression-plus.multiplier": "Множник",
+  "config.progression-plus.resistance": "Захист",
+  "config.progression-plus.save_button": "Зберегти",
+  "config.progression-plus.hud_position_button": "Позиція лічильника",
+  "config.progression-plus.bonus_prefix": "_бонус",
+  "config.progression-plus.resistance_prefix": "_захист"
 }

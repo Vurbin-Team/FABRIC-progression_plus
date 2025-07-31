@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "minecraft:deepslate_bricks",
+    "R": "progression-plus:yellow_skint_crystal_shard_2"
+  },
+  "pattern": [
+    " # ",
+    "#R#",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "progression-plus:skint_core"
+  }
+}

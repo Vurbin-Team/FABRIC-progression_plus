@@ -3,8 +3,11 @@
   "package": "com.progressionplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "damageReduction",
     "MiningSpeedMixin",
+    "AnvilScreenHandlerMixin",
+    "damageReduction",
+    "PlayerManagerMixin",
+    "ServerPlayerEntityMixin",
     "syncUpgradesOnDeath"
   ],
   "injectors": {
@@ -12,5 +15,5 @@
   },
   "overwrites": {
     "requireAnnotations": true
-	}
+  }
 }

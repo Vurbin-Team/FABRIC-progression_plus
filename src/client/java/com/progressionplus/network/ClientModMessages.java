@@ -14,8 +14,6 @@ import net.minecraft.util.Identifier;
 import static com.progressionplus.Progressionplus.LOGGER;
 
 public class ClientModMessages {
-    public static final Identifier ID = Identifier.of(Progressionplus.MOD_ID, "sync_upgrades");
-
     public static void initClient() {
         ClientPlayNetworking.registerGlobalReceiver(ID, (client, handler, buf, responseSender) -> {
             UpgradePayload payload = UpgradePayload.read(buf);
