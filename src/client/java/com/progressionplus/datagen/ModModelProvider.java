@@ -2,13 +2,11 @@ package com.progressionplus.datagen;
 
 import com.progressionplus.registry.ModBlocks;
 import com.progressionplus.registry.ModItems;
-import com.progressionplus.registry.armor.CustomEquipmentAssetKeys;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.block.AmethystClusterBlock;
-import net.minecraft.client.data.*;
-import net.minecraft.client.render.RenderLayer;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
 
 public class ModModelProvider extends FabricModelProvider {
     public ModModelProvider(FabricDataOutput output) {
@@ -38,9 +36,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.TITANIUM_AXE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.TITANIUM_HOE, Models.HANDHELD);
 
-        itemModelGenerator.registerArmor(ModItems.TITANIUM_HELMET, CustomEquipmentAssetKeys.TITANIUM, ItemModelGenerator.HELMET_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(ModItems.TITANIUM_CHESTPLATE, CustomEquipmentAssetKeys.TITANIUM, ItemModelGenerator.CHESTPLATE_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(ModItems.TITANIUM_LEGGINGS, CustomEquipmentAssetKeys.TITANIUM, ItemModelGenerator.LEGGINGS_TRIM_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(ModItems.TITANIUM_BOOTS, CustomEquipmentAssetKeys.TITANIUM, ItemModelGenerator.BOOTS_TRIM_ID_PREFIX, false);
+        itemModelGenerator.registerArmor(ModItems.TITANIUM_HELMET);
+        itemModelGenerator.registerArmor(ModItems.TITANIUM_CHESTPLATE);
+        itemModelGenerator.registerArmor(ModItems.TITANIUM_LEGGINGS);
+        itemModelGenerator.registerArmor(ModItems.TITANIUM_BOOTS);
     }
 }

@@ -5,6 +5,7 @@ import com.progressionplus.registry.ModItems;
 import com.progressionplus.registry.block.ImplementedInventory;
 import com.progressionplus.registry.block.ModBlockEntities;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,27 +13,33 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Debug;
 import org.jetbrains.annotations.Nullable;
 
-public class ExperienceStoragePedestalEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<BlockPos> {
+public class ExperienceStoragePedestalEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private float rotation = 0;
-    private int storedExperience = 0; // Хранимый опыт
+    private int storedExperience = 0;
 
     public ExperienceStoragePedestalEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.EXPERIENCE_PEDESTAL_BE, pos, state);
+    }
+
+    @Override
+    public void clear() {
+        inventory.set(0, ItemStack.EMPTY);
+        markDirty();
     }
 
     @Override
@@ -40,17 +47,15 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
         return inventory;
     }
 
-    // Геттер для получения количества опыта
     public int getStoredExperience() {
         return storedExperience;
     }
 
-    // Добавить опыт
     public void addExperience(int experience) {
         this.storedExperience += experience;
+        markDirty();
     }
 
-    // Проверить, есть ли нужный предмет в инвентаре
     public boolean hasCrystal() {
         ItemStack stack = getStack(0);
         if (stack.isEmpty()) return false;
@@ -60,7 +65,6 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
         return insertItemId.equals(itemId);
     }
 
-    // Переопределяем методы для контроля вставки предметов
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable net.minecraft.util.math.Direction side) {
         if (slot != 0) return false;
@@ -72,18 +76,10 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        // Проверяем, можно ли вставить предмет
-        if (slot == 0 && !stack.isEmpty()) {
-            Identifier itemId = Registries.ITEM.getId(stack.getItem());
-            Identifier insertItemId = Registries.ITEM.getId(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2);
-            if (!insertItemId.equals(itemId)) {
-                return; // Не разрешаем вставку
-            }
-        }
-        inventory.set(slot, stack);
+        inventory.set(slot, stack.copyWithCount(1));
+        markDirty();
     }
 
-    // Попытка передать опыт от игрока к блоку
     public boolean tryStorePlayerExperience(PlayerEntity player) {
         if (!hasCrystal()) {
             return false;
@@ -100,11 +96,11 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
         return false;
     }
 
-    // Попытка передать опыт от блока к игроку
     public boolean tryGiveExperienceToPlayer(PlayerEntity player) {
         if (storedExperience > 0) {
             player.addExperience(storedExperience);
             storedExperience = 0;
+            markDirty();
             return true;
         }
         return false;
@@ -119,42 +115,28 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.writeNbt(nbt, registryLookup);
-        Inventories.writeNbt(nbt, inventory, registryLookup);
+    protected void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        Inventories.writeNbt(nbt, inventory);
         nbt.putInt("StoredExperience", storedExperience);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        Inventories.readNbt(nbt, inventory, registryLookup);
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        Inventories.readNbt(nbt, inventory);
         if (nbt.contains("StoredExperience")) {
-            storedExperience = nbt.getInt("StoredExperience").get();
+            storedExperience = nbt.getInt("StoredExperience");
         } else {
             storedExperience = 0;
         }
     }
 
-    @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        // Дропаем предметы только если есть что дропать
-        if (!this.isEmpty()) {
-            ItemScatterer.spawn(world, pos, this);
-        }
-        super.onBlockReplaced(pos, oldState);
-    }
-
-    @Override
-    public BlockPos getScreenOpeningData(ServerPlayerEntity player) {
-        return this.pos;
-    }
 
     @Override
     public Text getDisplayName() {
         return Text.literal("Experience storage pedestal");
     }
-
 
     @Nullable
     @Override
@@ -163,8 +145,8 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Nullable
@@ -175,10 +157,14 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
 
     @Override
     public void markDirty() {
+        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
         super.markDirty();
-        if (world != null && !world.isClient) {
-            // Отправляем обновление клиенту
-            world.updateListeners(pos, getCachedState(), getCachedState(), 3);
-        }
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
+        // Можно добавить дополнительные данные для синхронизации
+        packetByteBuf.writeBlockPos(pos);
+        packetByteBuf.writeInt(storedExperience);
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "progression-plus:titanium_ingot"
+    },
+    "S": {
+      "item": "progression-plus:deepslate_handle"
+    }
+  },
+  "pattern": [
+    "R",
+    "R",
+    "S"
+  ],
+  "result": {
+    "item": "progression-plus:titanium_sword"
+  },
+  "show_notification": true
+}

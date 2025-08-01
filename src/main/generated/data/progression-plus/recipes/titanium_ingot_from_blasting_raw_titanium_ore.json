@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "titanium",
+  "ingredient": {
+    "item": "progression-plus:raw_titanium_ore"
+  },
+  "result": "progression-plus:titanium_ingot"
+}

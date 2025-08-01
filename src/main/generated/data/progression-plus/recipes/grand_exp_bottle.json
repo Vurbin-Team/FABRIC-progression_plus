@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:experience_bottle"
+    },
+    "A": {
+      "item": "minecraft:glow_ink_sac"
+    },
+    "B": {
+      "item": "minecraft:echo_shard"
+    },
+    "C": {
+      "item": "minecraft:nether_wart"
+    },
+    "D": {
+      "item": "progression-plus:yellow_skint_crystal_shard_2"
+    },
+    "E": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "pattern": [
+    "A#B",
+    "#E#",
+    "D#C"
+  ],
+  "result": {
+    "item": "progression-plus:grand_exp_bottle"
+  },
+  "show_notification": true
+}

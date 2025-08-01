@@ -8,11 +8,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtSizeTracker;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructureLiquidSettings;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.util.BlockMirror;
@@ -27,6 +24,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import net.minecraft.registry.RegistryKeys;
 
 public class SpawnEventHandler {
     private static final String MARKER_FILE = "spawn_structure_generated.marker";
@@ -89,7 +87,7 @@ public class SpawnEventHandler {
             }
 
             StructureTemplate template = new StructureTemplate();
-            template.readNbt(world.getRegistryManager().getOrThrow(RegistryKeys.BLOCK), nbt);
+            template.readNbt(world.getRegistryManager().getWrapperOrThrow(net.minecraft.registry.RegistryKeys.BLOCK), nbt);
 
             int structureWidth = 21;
             int structureHeight = 11;
@@ -114,9 +112,10 @@ public class SpawnEventHandler {
                     .setPosition(bestPlacementPos)
                     .setUpdateNeighbors(true)
                     .setIgnoreEntities(false)
-                    .setLiquidSettings(StructureLiquidSettings.APPLY_WATERLOGGING)
-                    .setInitializeMobs(true)
-                    .setRandom(world.getRandom()).addProcessor(new TerrainMatchingProcessor(world));
+                    .setInitializeMobs(true);
+
+            // Add processor if TerrainMatchingProcessor exists
+            // placementData.addProcessor(new TerrainMatchingProcessor(world));
 
             boolean success = template.place(world, bestPlacementPos, bestPlacementPos, placementData, world.getRandom(), 2);
 
@@ -229,11 +228,9 @@ public class SpawnEventHandler {
     }
 
     private static NbtCompound readNbtFile(InputStream inputStream) {
-        NbtSizeTracker sizeTracker = NbtSizeTracker.ofUnlimitedBytes();
-
         try {
             Progressionplus.LOGGER.info("Trying to read NBT as compressed format...");
-            return NbtIo.readCompressed(inputStream, sizeTracker);
+            return NbtIo.readCompressed(inputStream);
         } catch (Exception e) {
             Progressionplus.LOGGER.info("Compressed format failed: " + e.getMessage());
         }
@@ -244,7 +241,7 @@ public class SpawnEventHandler {
 
             Progressionplus.LOGGER.info("Trying to read NBT as uncompressed format...");
             DataInputStream dataStream = new DataInputStream(inputStream);
-            NbtElement element = NbtIo.read(dataStream, sizeTracker);
+            NbtElement element = NbtIo.read(dataStream);
 
             if (element instanceof NbtCompound compound) {
                 return compound;

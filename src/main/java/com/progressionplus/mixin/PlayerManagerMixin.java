@@ -2,7 +2,6 @@ package com.progressionplus.mixin;
 
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
-import net.minecraft.server.network.ConnectedClientData;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerManagerMixin {
 
     @Inject(method = "onPlayerConnect", at = @At("TAIL"))
-    private void enforceExactSpawnOnConnect(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
+    private void enforceExactSpawnOnConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         ServerWorld world = player.getServerWorld();
         BlockPos worldSpawn = world.getSpawnPos();
 

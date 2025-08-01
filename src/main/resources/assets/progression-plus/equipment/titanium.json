@@ -2,12 +2,12 @@
   "layers": {
     "humanoid": [
       {
-        "texture": "progression-plus:titanium"
+        "texture": "progression-plus:titanium_layer_1"
       }
     ],
     "humanoid_leggings": [
       {
-        "texture": "progression-plus:titanium"
+        "texture": "progression-plus:titanium_layer_2"
       }
     ]
   }

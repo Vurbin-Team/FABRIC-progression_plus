@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "titanium",
+  "ingredient": {
+    "item": "progression-plus:deepslate_titanium_ore_block"
+  },
+  "result": "progression-plus:titanium_ingot"
+}

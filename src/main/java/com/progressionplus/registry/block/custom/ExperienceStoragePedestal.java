@@ -1,15 +1,17 @@
 package com.progressionplus.registry.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import com.progressionplus.Progressionplus;
 import com.progressionplus.registry.block.entity.ExperienceStoragePedestalEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -22,6 +24,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -33,7 +36,6 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private static final VoxelShape LOWER_SHAPE = BlockWithEntity.createCuboidShape(3, 0, 3, 13, 16, 13);
     private static final VoxelShape UPPER_SHAPE = BlockWithEntity.createCuboidShape(3, 0, 3, 13, 10, 13);
-    public static final MapCodec<ExperienceStoragePedestal> CODEC = ExperienceStoragePedestal.createCodec(ExperienceStoragePedestal::new);
 
     public ExperienceStoragePedestal(Settings settings) {
         super(settings);
@@ -48,13 +50,8 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
     }
 
     @Override
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return state.get(HALF) == DoubleBlockHalf.LOWER ? LOWER_SHAPE : UPPER_SHAPE;
-    }
-
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
     }
 
     @Override
@@ -90,7 +87,7 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!world.isClient) {
             DoubleBlockHalf half = state.get(HALF);
             BlockPos otherPos = half == DoubleBlockHalf.LOWER ? pos.up() : pos.down();
@@ -101,7 +98,7 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
                 world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, otherPos, Block.getRawIdFromState(otherState));
             }
         }
-        return super.onBreak(world, pos, state, player);
+        super.onBreak(world, pos, state, player);
     }
 
     @Override
@@ -123,6 +120,19 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
                 new ExperienceStoragePedestalEntity(pos, state) : null;
     }
 
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof ExperienceStoragePedestalEntity) {
+                ItemScatterer.spawn(world, pos, (ExperienceStoragePedestalEntity)blockEntity);
+                world.updateComparators(pos, this);
+            }
+
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
+    }
+
     private ExperienceStoragePedestalEntity getPedestalEntity(World world, BlockPos pos, BlockState state) {
         // Всегда получаем BlockEntity из нижней части
         BlockPos lowerPos = state.get(HALF) == DoubleBlockHalf.LOWER ? pos : pos.down();
@@ -134,12 +144,13 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
     }
 
     @Override
-    protected BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 
 
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
@@ -162,6 +173,8 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
                             Text text = Text.translatable("message.progression-plus.experience_stored");
                             player.sendMessage(Text.literal(text.getString() + pedestalEntity.getStoredExperience())
                                     .formatted(Formatting.GREEN), true);
+                            pedestalEntity.markDirty();
+                            updateBothParts(world, pos, state);
                             return ActionResult.SUCCESS;
                         }
                     }
@@ -172,6 +185,8 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
                             Text text = Text.translatable("message.progression-plus.experience_retrieved");
                             player.sendMessage(Text.literal(text.getString())
                                     .formatted(Formatting.AQUA), true);
+                            pedestalEntity.markDirty();
+                            updateBothParts(world, pos, state);
                             return ActionResult.SUCCESS;
                         }
                     }
@@ -179,60 +194,48 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
                     Text text = Text.translatable("message.progression-plus.need_skint");
                     player.sendMessage(Text.literal(text.getString())
                             .formatted(Formatting.RED), true);
+                    return ActionResult.PASS;
                 }
-            }
-            // Shift + ПКМ с предметом - открытие GUI
-            else {
-                player.openHandledScreen(pedestalEntity);
-                return ActionResult.SUCCESS;
             }
         }
-
-        return ActionResult.PASS;
-    }
-
-    @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
-                                         PlayerEntity player, Hand hand, BlockHitResult hit) {
-        // Всегда работаем с нижней частью блока
-        ExperienceStoragePedestalEntity pedestalBlockEntity = getPedestalEntity(world, pos, state);
-
-        if(pedestalBlockEntity != null) {
-            // Если зажат Shift - не обрабатываем здесь, пусть обрабатывает onUse
-            if (player.isSneaking()) {
-                onUse(state, world, pos, player ,hit);
-                return ActionResult.SUCCESS;
-            }
-
-            if(pedestalBlockEntity.isEmpty() && !stack.isEmpty()) {
-                // Проверяем, можно ли поместить предмет
-                if (pedestalBlockEntity.canInsert(0, stack, null)) {
-                    pedestalBlockEntity.setStack(0, stack.copyWithCount(1));
-                    world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 2f);
-                    stack.decrement(1);
-
-                    pedestalBlockEntity.markDirty();
-                    updateBothParts(world, pos, state);
-                } else {
-                    if (!world.isClient) {
-                        Text text = Text.translatable("message.progression-plus.only_skint");
-                        player.sendMessage(Text.literal(text.getString())
-                                .formatted(Formatting.RED), true);
-                    }
-                }
-            } else if(stack.isEmpty() && !pedestalBlockEntity.isEmpty()) {
-                ItemStack stackOnPedestal = pedestalBlockEntity.getStack(0);
-                player.setStackInHand(Hand.MAIN_HAND, stackOnPedestal);
-                world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
-                pedestalBlockEntity.clear();
-
-                pedestalBlockEntity.markDirty();
-                updateBothParts(world, pos, state);
-            }
+        else{
+            ItemStack stack = player.getMainHandStack();
+            onUseWithItem(stack, state, world, pos, player, pedestalEntity);
+            return ActionResult.SUCCESS;
         }
 
         return ActionResult.SUCCESS;
     }
+
+    protected void onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
+                                 PlayerEntity player, ExperienceStoragePedestalEntity pedestalBlockEntity) {
+        if(pedestalBlockEntity.isEmpty() && !stack.isEmpty()) {
+            // Проверяем, можно ли поместить предмет
+            if (pedestalBlockEntity.canInsert(0, stack, null)) {
+                pedestalBlockEntity.setStack(0, stack.copyWithCount(1));
+                world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 2f);
+                stack.decrement(1);
+
+                pedestalBlockEntity.markDirty();
+            } else {
+                if (!world.isClient) {
+                    Text text = Text.translatable("message.progression-plus.only_skint");
+                    player.sendMessage(Text.literal(text.getString())
+                            .formatted(Formatting.RED), true);
+                }
+            }
+            updateBothParts(world, pos, state);
+        } else if(stack.isEmpty() && !pedestalBlockEntity.isEmpty()) {
+            ItemStack stackOnPedestal = pedestalBlockEntity.getStack(0);
+            player.setStackInHand(Hand.MAIN_HAND, stackOnPedestal);
+            world.playSound(player, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
+            pedestalBlockEntity.clear();
+
+            pedestalBlockEntity.markDirty();
+            updateBothParts(world, pos, state);
+        }
+    }
+
 
     // Вспомогательный метод для обновления обеих частей блока
     private void updateBothParts(World world, BlockPos pos, BlockState state) {

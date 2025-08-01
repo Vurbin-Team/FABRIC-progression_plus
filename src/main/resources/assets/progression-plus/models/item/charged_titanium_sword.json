@@ -1,5 +1,5 @@
 {
-	"parent": "item/generated",
+	"parent": "item/handled",
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "progression-plus:item/charged_titanium_sword",

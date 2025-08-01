@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "progression-plus:yellow_skint_block",
+    "progression-plus:yellow_skint_crystal",
+    "progression-plus:skint_bricks",
+    "#progression-plus:needs_titanium_tool",
+    "#minecraft:needs_diamond_tool",
+    "progression-plus:experience_storage_pedestal",
+    "progression-plus:titanium_block"
+  ]
+}

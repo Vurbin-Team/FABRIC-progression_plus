@@ -5,6 +5,7 @@ import com.progressionplus.config.HudConfigLoader;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 
 public class CustomHudRenderer implements HudRenderCallback {
@@ -29,7 +30,6 @@ public class CustomHudRenderer implements HudRenderCallback {
         // Рендерим фон, флип по X если нужно
         if (isOnRightSide) {
             drawContext.drawTexture(
-                    RenderLayer::getGuiTextured,
                     HUD_TEXTURE,
                     hudX, hudY,
                     0, 0,
@@ -38,7 +38,6 @@ public class CustomHudRenderer implements HudRenderCallback {
             );
         } else {
             drawContext.drawTexture(
-                    RenderLayer::getGuiTextured,
                     HUD_TEXTURE_FLIPPED,
                     hudX, hudY,
                     HUD_TEXTURE_WIDTH, 0,

@@ -12,6 +12,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 import static com.progressionplus.Progressionplus.LOGGER;
+import static com.progressionplus.network.ModMessages.ID;
 
 public class ClientModMessages {
     public static void initClient() {

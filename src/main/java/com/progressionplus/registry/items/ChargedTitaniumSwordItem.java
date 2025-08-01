@@ -1,18 +1,19 @@
 package com.progressionplus.registry.items;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.consume.UseAction;
+import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -20,15 +21,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ChargedTitaniumSwordItem extends Item {
+public class ChargedTitaniumSwordItem extends SwordItem {
     // Настраиваемые параметры
     private static final double DAMAGE_RADIUS = 7.0; // Радиус урона
     private static final float DAMAGE_AMOUNT = 8.0f; // Количество урона
     private static final double EFFECT_SPEED = 0.3; // Скорость распространения эффектов
     private static final int EFFECT_DURATION = 20; // Длительность эффектов в тиках
 
-    public ChargedTitaniumSwordItem(Settings settings) {
-        super(settings);
+    public ChargedTitaniumSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+        super(toolMaterial, attackDamage, attackSpeed, settings);
     }
 
     @Override
@@ -37,14 +38,15 @@ public class ChargedTitaniumSwordItem extends Item {
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+    public int getMaxUseTime(ItemStack stack) {
         return 25;
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         user.setCurrentHand(hand);
-        return ActionResult.CONSUME;
+        ItemStack stack = user.getStackInHand(hand);
+        return TypedActionResult.consume(stack);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class ChargedTitaniumSwordItem extends Item {
         // Наносим урон всем найденным существам
         for (LivingEntity entity : entities) {
             DamageSource damageSource = world.getDamageSources().playerAttack(player);
-            entity.damage((ServerWorld) world, damageSource, DAMAGE_AMOUNT);
+            entity.damage(damageSource, DAMAGE_AMOUNT);
 
             // Отбрасываем цель от игрока
             Vec3d knockback = entity.getPos().subtract(playerPos).normalize().multiply(1.5);

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "progression-plus:deepslate_titanium_ore_block",
+    "progression-plus:yellow_skint_block",
+    "progression-plus:yellow_skint_crystal",
+    "progression-plus:skint_bricks",
+    "progression-plus:experience_storage_pedestal",
+    "progression-plus:titanium_block"
+  ]
+}

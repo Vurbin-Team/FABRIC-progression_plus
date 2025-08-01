@@ -6,34 +6,23 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
 
-    // Перехватываем конструктор для установки точной позиции при создании игрока
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void setExactSpawnOnCreate(CallbackInfo ci) {
-        ServerPlayerEntity player = (ServerPlayerEntity)(Object)this;
-        ServerWorld world = player.getServerWorld();
-        BlockPos worldSpawn = world.getSpawnPos();
-
-        // Устанавливаем точную позицию спавна вместо случайной
-        player.refreshPositionAndAngles(
-                worldSpawn.getX() + 0.5,
-                worldSpawn.getY(),
-                worldSpawn.getZ() + 0.5,
-                0.0f, // всегда смотрим на север
-                0.0f
-        );
+    // Перехватываем метод moveToSpawn для установки точной позиции при создании игрока
+    @Redirect(method = "moveToSpawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;getSpawnRadius(Lnet/minecraft/server/world/ServerWorld;)I"))
+    private int forceZeroSpawnRadius(net.minecraft.server.MinecraftServer server, ServerWorld world) {
+        // Возвращаем 0, чтобы отключить радиус спавна
+        return 0;
     }
 
-    // Перехватываем метод copyFrom для респавна после смерти
-    @Inject(method = "copyFrom", at = @At("TAIL"))
-    private void setExactSpawnOnRespawn(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
+    // Альтернативный подход - перехватываем установку позиции в moveToSpawn
+    @Inject(method = "moveToSpawn", at = @At("TAIL"))
+    private void setExactSpawnPosition(ServerWorld world, CallbackInfo ci) {
         ServerPlayerEntity player = (ServerPlayerEntity)(Object)this;
-        ServerWorld world = player.getServerWorld();
         BlockPos worldSpawn = world.getSpawnPos();
 
         // Принудительно устанавливаем точную позицию спавна
@@ -41,14 +30,29 @@ public class ServerPlayerEntityMixin {
                 worldSpawn.getX() + 0.5,
                 worldSpawn.getY(),
                 worldSpawn.getZ() + 0.5,
-                0.0f,
+                world.getSpawnAngle(),
                 0.0f
         );
     }
 
-    @Inject(method = "getWorldSpawnPos", at = @At("HEAD"), cancellable = true)
-    private void forceExactWorldSpawn(ServerWorld world, BlockPos basePos, CallbackInfoReturnable<BlockPos> cir) {
-        // Всегда возвращаем точную позицию спавна мира, игнорируя радиус спавна
-        cir.setReturnValue(world.getSpawnPos());
+    // Перехватываем метод copyFrom для респавна после смерти
+    @Inject(method = "copyFrom", at = @At("TAIL"))
+    private void setExactSpawnOnRespawn(ServerPlayerEntity oldPlayer, boolean alive, CallbackInfo ci) {
+        if (!alive) { // Только при респавне после смерти
+            ServerPlayerEntity player = (ServerPlayerEntity)(Object)this;
+            ServerWorld world = player.getServerWorld();
+
+            // Если у игрока нет кастомной точки спавна, используем мировую
+            if (player.getSpawnPointPosition() == null) {
+                BlockPos worldSpawn = world.getSpawnPos();
+                player.refreshPositionAndAngles(
+                        worldSpawn.getX() + 0.5,
+                        worldSpawn.getY(),
+                        worldSpawn.getZ() + 0.5,
+                        world.getSpawnAngle(),
+                        0.0f
+                );
+            }
+        }
     }
 }

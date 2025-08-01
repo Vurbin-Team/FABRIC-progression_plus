@@ -20,7 +20,7 @@ public class ModTags {
 
     public static class Items {
         public static final TagKey<Item> TRANSFORMABLE_ITEMS = of("transformable_items");
-        public static final TagKey<Item> TITANIUM_REPAIR = of("titanitum_repair");
+        public static final TagKey<Item> TITANIUM_REPAIR = of("titanium_ingot");
         public static final TagKey<Item> TITANIUM_TOOL_MATERIAL = of("titanitum_tool_material");
 
         private static TagKey<Item> of(String name) {

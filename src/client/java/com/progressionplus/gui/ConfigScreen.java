@@ -151,16 +151,8 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderBackground(context);
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 10, 0xFFFFFF);
         super.render(context, mouseX, mouseY, delta);
-    }
-
-    @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        if (this.client.world == null) {
-            this.renderPanoramaBackground(context, deltaTicks);
-        }
-
-        this.renderDarkening(context);
     }
 }

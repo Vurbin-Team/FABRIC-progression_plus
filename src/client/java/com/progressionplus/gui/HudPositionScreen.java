@@ -62,6 +62,7 @@ public class HudPositionScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderBackground(context);
         // Основний прямокутник HUD
         int fillColor = 0x88000000; // напівпрозорий чорний
         context.fill(hudX, hudY, hudX + HudConfigLoader.HUD_WIDTH, hudY + HudConfigLoader.HUD_HEIGHT, fillColor);
@@ -84,14 +85,5 @@ public class HudPositionScreen extends Screen {
         context.fill(hudX + HudConfigLoader.HUD_WIDTH - 1, hudY, hudX + HudConfigLoader.HUD_WIDTH, hudY + HudConfigLoader.HUD_HEIGHT, borderColor);
 
         super.render(context, mouseX, mouseY, delta);
-    }
-
-    @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
-        if (this.client.world == null) {
-            this.renderPanoramaBackground(context, deltaTicks);
-        }
-
-        this.renderDarkening(context);
     }
 }

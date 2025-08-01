@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -45,14 +46,12 @@ public class ProgressionplusClient implements ClientModInitializer {
 			}
 		});
 
-
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.YELLOW_SKINT_CRYSTAL, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.EXPERIENCE_STORAGE_PEDESTAL, RenderLayer.getCutout());
 
-		BlockEntityRendererRegistry.register(
-				ModBlockEntities.EXPERIENCE_PEDESTAL_BE,
-				ExperienceStorageBlockEntityRenderer::new
-		);
+		BlockEntityRendererFactories.register(ModBlockEntities.EXPERIENCE_PEDESTAL_BE,
+				ExperienceStorageBlockEntityRenderer::new);
+
 
 		// Initialize client-side networking
 		ClientModMessages.initClient();
