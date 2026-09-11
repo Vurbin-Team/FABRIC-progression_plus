@@ -1,6 +1,8 @@
 package com.progressionplus.gui;
 
 import com.progressionplus.Progressionplus;
+import com.progressionplus.data.PlayerComponents;
+import com.progressionplus.upgrades.PlayerUpgrade;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -12,11 +14,15 @@ public class CustomHudRenderer implements HudRenderCallback {
     private static final Identifier HUD_TEXTURE = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background.png");
     private static final int HUD_TEXTURE_WIDTH = 75;
     private static final int HUD_TEXTURE_HEIGHT = 38;
+    private PlayerUpgrade playerUpgrades;
 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
+
         if (client.player == null || client.options.hudHidden) return;
+
+        playerUpgrades = PlayerComponents.PLAYER_UPGRADES.get(client.player).getPlayerUpgrade();
 
         int screenWidth = drawContext.getScaledWindowWidth();
         int screenHeight = drawContext.getScaledWindowHeight();
@@ -39,7 +45,7 @@ public class CustomHudRenderer implements HudRenderCallback {
 
         // Получение значений опыта и уровня
         String currentExp = client.player.totalExperience + "";
-        String currentLevel = client.player.experienceLevel + " lvl";
+        String currentLevel = playerUpgrades.getTotalLevels() + " lvl";
 
         // Центр текстуры
         int centerX = HUD_X + (int)(HUD_TEXTURE_WIDTH / 1.6f);
