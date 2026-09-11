@@ -1,7 +1,6 @@
 package com.progressionplus.gui;
 
 import com.progressionplus.Progressionplus;
-import com.progressionplus.config.UpgradeConfig;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.network.ClientModMessages;
 import com.progressionplus.sounds.ModSounds;
@@ -41,9 +40,61 @@ public class UpgradeMenu extends Screen {
             Identifier.of(Progressionplus.MOD_ID, "stats/button_level_up_focused")
     );
 
-    private static final int PADDING = 13;
     private static final int TEXT_COLOR = 0xfff7cc;
-    private static final int BUTTON_SIZE = 9;
+    private static final int OVERLAY_COLOR = 0xC0000000;
+
+    /**
+     * The only place that defines the menu geometry. Coordinates use the
+     * 1920 x 1080 reference canvas, relative to the main panel's top-left.
+     */
+    private static final class Layout {
+        private static final int REFERENCE_WIDTH = 1_920;
+        private static final int REFERENCE_HEIGHT = 1_080;
+        private static final float TEXTURE_SCALE = 2.5f;
+        private static final float MAIN_PANEL_WIDTH = 480;
+        private static final float MAIN_PANEL_HEIGHT = 270;
+        private static final float CARD_WIDTH = 135;
+        private static final float CARD_HEIGHT = 270;
+        private static final float MAIN_PANEL_HORIZONTAL_SHIFT = 0.10f;
+        private static final float CARD_LEFT_MARGIN = 0.02f;
+
+        private static final float TITLE_SCALE = 3.0f;
+        private static final float LIST_SCALE = 2.5f;
+        private static final float EXPERIENCE_VALUE_SCALE = 5.0f;
+        private static final float EXPERIENCE_LABEL_SCALE = 2.0f;
+        private static final float CARD_LEVEL_SCALE = 2.3f;
+        private static final int ROW_SPACING = 13;
+        private static final int ROW_START_Y = 73;
+        private static final int LIST_TEXT_X = 240;
+        private static final int INDICATOR_VALUE_X = 180;
+        private static final int DEFENSE_VALUE_X = 389;
+        private static final int BUTTON_SIZE = 9;
+        private static final int BUTTON_X = 400;
+        private static final int LEVEL_NUMBER_DIGITS = 2;
+        private static final String LEVEL_PREFIX_GAP = "   ";
+        private static final int PERCENTAGE_MULTIPLIER = 100;
+        private static final String PERCENTAGE_TRANSITION = "% > ";
+
+        private static final Point UPGRADES = new Point(45, 0);
+        private static final Point DEFENSES = new Point(45, 290);
+        private static final Point EXPERIENCE = new Point(310, 260);
+        private static final Point INDICATORS = new Point(90, 290);
+        private static final Point[] TITLES = {
+                new Point(53, 31), new Point(238, 31),
+                new Point(53, 132), new Point(238, 132)
+        };
+        private static final int EXPERIENCE_LABEL_OFFSET_Y = ROW_SPACING + 8;
+        private static final float CARD_LEVEL_BOTTOM_MARGIN = 1f / 14f;
+        private static final float ENTITY_SIZE_RATIO = 0.3f;
+        private static final float ENTITY_VERTICAL_OFFSET = 0;
+        private static final float ENTITY_MOUSE_DIVISOR = 40.0f;
+        private static final float ENTITY_BODY_YAW_FACTOR = 20.0f;
+        private static final float ENTITY_HEAD_YAW_FACTOR = 40.0f;
+        private static final float ENTITY_TILT_DEGREES = 20.0f;
+        private static final float ENTITY_DEPTH = -2.0f;
+    }
+
+    private record Point(int x, int y) {}
 
     private int mainBgWidth;
     private int mainBgHeight;
@@ -71,23 +122,29 @@ public class UpgradeMenu extends Screen {
 
     @Override
     protected void init() {
-        this.mainBgWidth = (int) (this.width * 0.7f);
-        this.mainBgHeight = (int) (mainBgWidth / (16f / 9f) + 4);
-        this.mainBgX = (int)(this.width / 3.5f);
+        // aspect ratio.
+        float scaleX = this.width / (float) Layout.REFERENCE_WIDTH;
+        float scaleY = this.height / (float) Layout.REFERENCE_HEIGHT;
+        this.baseScale = Math.min(scaleX, scaleY);
+
+        // mainBgWidth/Height считаем строго из baseScale и реальных
+        // пропорций текстуры (480x270 = 16:9), а не из this.width напрямую.
+        // Так mainBg всегда масштабируется синхронно с baseScale.
+        this.mainBgWidth = scaled(Layout.MAIN_PANEL_WIDTH * Layout.TEXTURE_SCALE);
+        this.mainBgHeight = scaled(Layout.MAIN_PANEL_HEIGHT * Layout.TEXTURE_SCALE);
+        this.mainBgX = centered(mainBgWidth) + scaledScreen(Layout.MAIN_PANEL_HORIZONTAL_SHIFT);
         this.mainBgY = this.height / 2 - mainBgHeight / 2;
 
-        this.cardBgWidth = (int) (this.width * 0.2f);
-        this.cardBgHeight = (int) (cardBgWidth / (1f / 2f) - 3);
-        this.cardBgX = (int)(this.width / 40f);
+        // cardBgWidth/Height аналогично из реальных пропорций текстуры (135x270 = 1:2)
+        this.cardBgWidth = scaled(Layout.CARD_WIDTH * Layout.TEXTURE_SCALE);
+        this.cardBgHeight = scaled(Layout.CARD_HEIGHT * Layout.TEXTURE_SCALE);
+        this.cardBgX = scaledScreen(Layout.CARD_LEFT_MARGIN);
         this.cardBgY = this.height / 2 - cardBgHeight / 2;
-
-        this.baseScale = this.width / 1920f;
 
         this.playerUpgrades = PlayerComponents.PLAYER_UPGRADES.get(this.client.player).getPlayerUpgrade();
         this.levels = playerUpgrades.getTotalLevels();
         this.requiredTotalExp = playerUpgrades.getRequiredExp(levels);
 
-        // Очищаем список кнопок перед инициализацией
         this.upgradeButtons.clear();
 
         initUpgradeButtons();
@@ -96,12 +153,14 @@ public class UpgradeMenu extends Screen {
     private void initUpgradeButtons() {
 
         // Используем фиксированные координаты относительно основного фона
-        int baseX = mainBgX + (int)(460 * baseScale * 2.5f);
-        int baseY = mainBgY + (int)(85 * baseScale * 2.5f);
+        int baseX = backgroundX(Layout.BUTTON_X * Layout.TEXTURE_SCALE);
+        float textScale = textScale(Layout.LIST_SCALE);
+        int textAnchorY = backgroundY(Layout.UPGRADES);
+        int baseY = renderedY(textAnchorY, textScale, Layout.ROW_START_Y);
 
         // Размер кнопки с учетом масштаба
-        int scaledButtonSize = (int)(BUTTON_SIZE * baseScale * 2.5f);
-        int scaledPadding = (int)(PADDING * baseScale * 2.5f);
+        int scaledButtonSize = scaled(Layout.BUTTON_SIZE * Layout.TEXTURE_SCALE);
+        int scaledPadding = scaled(Layout.ROW_SPACING * Layout.TEXTURE_SCALE);
 
         int currentY = baseY;
 
@@ -145,7 +204,7 @@ public class UpgradeMenu extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.levels = playerUpgrades.getTotalLevels();
         this.requiredTotalExp = playerUpgrades.getRequiredExp(levels);
-        context.fill(0, 0, this.width, this.height, 0xC0000000);
+        context.fill(0, 0, this.width, this.height, OVERLAY_COLOR);
 
         renderCustomBackground(context);
         renderCustomPlayerCard(context, mouseX, mouseY);
@@ -173,8 +232,8 @@ public class UpgradeMenu extends Screen {
 
 
     //  ---------------------  render titles ---------------------
-    private record TitleInfo(String translationKey, int xOffset, int yOffset, String suffix) {}
-    private void renderTitle(DrawContext context, float adjustedX, float adjustedY, TitleInfo info) {
+    private record TitleInfo(String translationKey, Point position, String suffix) {}
+    private void renderTitle(DrawContext context, int adjustedX, int adjustedY, TitleInfo info) {
         MutableText text = Text.translatable(info.translationKey());
         if (info.suffix() != null) {
             text = text.append(info.suffix());
@@ -183,18 +242,18 @@ public class UpgradeMenu extends Screen {
         context.drawTextWithShadow(
                 this.textRenderer,
                 text,
-                (int)adjustedX + info.xOffset(),
-                (int)adjustedY + info.yOffset(),
+                adjustedX + info.position().x(),
+                adjustedY + info.position().y(),
                 TEXT_COLOR
         );
     }
     private void renderTitles(DrawContext context, int x, int y) {
-        renderWithScale(context, x, y, 3f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x, y, Layout.TITLE_SCALE, (ctx, adjustedX, adjustedY) -> {
             TitleInfo[] titles = {
-                    new TitleInfo("upgrade.progression-plus.level", 68, 36, " " + levels),
-                    new TitleInfo("upgrade.progression-plus.attributes", 275, 36, null),
-                    new TitleInfo("upgrade.progression-plus.indicators", 68, 149, null),
-                    new TitleInfo("upgrade.progression-plus.defense", 275, 149, null)
+                    new TitleInfo("upgrade.progression-plus.level", Layout.TITLES[0], " " + levels),
+                    new TitleInfo("upgrade.progression-plus.attributes", Layout.TITLES[1], null),
+                    new TitleInfo("upgrade.progression-plus.indicators", Layout.TITLES[2], null),
+                    new TitleInfo("upgrade.progression-plus.defense", Layout.TITLES[3], null)
             };
 
             for (TitleInfo title : titles) {
@@ -207,14 +266,13 @@ public class UpgradeMenu extends Screen {
 
     //  ---------------------  render upgrades ---------------------
     private record UpgradeInfo(String translationKey, int xOffset, int yOffset, int suffix) {}
-    private void renderUpgrade(DrawContext context, float adjustedX, float adjustedY, UpgradeInfo info) {
+    private void renderUpgrade(DrawContext context, int adjustedX, int adjustedY, UpgradeInfo info) {
         MutableText translatedText = Text.translatable(info.translationKey()).styled(style ->
                 style.withColor(TEXT_COLOR));
 
         if (info.suffix() != -1) {
-            String prefix = info.suffix() < 10
-                    ? "0" + info.suffix() + "   "
-                    : info.suffix() + "   ";
+            String prefix = String.format("%0" + Layout.LEVEL_NUMBER_DIGITS + "d%s",
+                    info.suffix(), Layout.LEVEL_PREFIX_GAP);
 
             MutableText coloredPrefix = Text.literal(prefix).styled(style ->
                     style.withColor(Formatting.GREEN)  // Цвет префикса
@@ -232,20 +290,20 @@ public class UpgradeMenu extends Screen {
         );
     }
     private void renderUpgrades(DrawContext context) {
-        int x = (int)(mainBgX * 1.35f);
-        int y = (int)(mainBgY * 1.2f);
+        int x = backgroundX(Layout.UPGRADES);
+        int y = backgroundY(Layout.UPGRADES);
 
-        renderWithScale(context, x, y, 2.5f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x, y, Layout.LIST_SCALE, (ctx, adjustedX, adjustedY) -> {
             UpgradeInfo[] upgrades = {
-                    new UpgradeInfo("upgrade.progression-plus.strength",    240, 60 + PADDING * 1,
+                    new UpgradeInfo("upgrade.progression-plus.strength",    Layout.LIST_TEXT_X, Layout.ROW_START_Y,
                             playerUpgrades.getLevel(UpgradeType.STRENGTH)),
-                    new UpgradeInfo("upgrade.progression-plus.endurance",   240, 60 + PADDING * 2,
+                    new UpgradeInfo("upgrade.progression-plus.endurance",   Layout.LIST_TEXT_X, Layout.ROW_START_Y + Layout.ROW_SPACING,
                             playerUpgrades.getLevel(UpgradeType.ENDURANCE)),
-                    new UpgradeInfo("upgrade.progression-plus.agility",     240, 60 + PADDING * 3,
+                    new UpgradeInfo("upgrade.progression-plus.agility",     Layout.LIST_TEXT_X, Layout.ROW_START_Y + 2 * Layout.ROW_SPACING,
                             playerUpgrades.getLevel(UpgradeType.AGILITY)),
-                    new UpgradeInfo("upgrade.progression-plus.luck",        240, 60 + PADDING * 4,
+                    new UpgradeInfo("upgrade.progression-plus.luck",        Layout.LIST_TEXT_X, Layout.ROW_START_Y + 3 * Layout.ROW_SPACING,
                             playerUpgrades.getLevel(UpgradeType.LUCK)),
-                    new UpgradeInfo("upgrade.progression-plus.mining_speed",240, 60 + PADDING * 5,
+                    new UpgradeInfo("upgrade.progression-plus.mining_speed",Layout.LIST_TEXT_X, Layout.ROW_START_Y + 4 * Layout.ROW_SPACING,
                             playerUpgrades.getLevel(UpgradeType.MINING_SPEED)),
             };
 
@@ -258,10 +316,12 @@ public class UpgradeMenu extends Screen {
 
     //  ---------------------  render defense stats  ---------------------
     private record DefenseInfo(String translationKey, int xOffset, int yOffset, float resistancePerLevel, int upgradeLevel) {}
-    private void renderDefense(DrawContext context, float adjustedX, float adjustedY, DefenseInfo info) {
-        boolean isMaxLevel = info.upgradeLevel() == UpgradeConfig.getMaxUpgradeLevel();
 
-        int resistencePerLevel = (int)(info.resistancePerLevel() * 100);
+    private void renderDefense(DrawContext context, int adjustedX, int adjustedY, DefenseInfo info) {
+        boolean isMaxLevel = info.upgradeLevel() == PlayerUpgrade.getMaxLevel();
+
+
+        int resistencePerLevel = (int) (info.resistancePerLevel() * Layout.PERCENTAGE_MULTIPLIER);
         int pracentage = resistencePerLevel * info.upgradeLevel();
 
         MutableText translatedText = Text.translatable(info.translationKey())
@@ -280,7 +340,7 @@ public class UpgradeMenu extends Screen {
                 TEXT_COLOR
         );
 
-        coloredPrefix.append(Text.literal("% > " + (pracentage + resistencePerLevel) + "%")
+        coloredPrefix.append(Text.literal(Layout.PERCENTAGE_TRANSITION + (pracentage + resistencePerLevel) + "%")
                 .styled(style -> style.withColor(TEXT_COLOR)));
 
         int textWidth = this.textRenderer.getWidth(coloredPrefix);
@@ -288,30 +348,30 @@ public class UpgradeMenu extends Screen {
         context.drawTextWithShadow(
                 this.textRenderer,
                 coloredPrefix,
-                (int) (adjustedX * 1.5f) - textWidth / 2 + info.xOffset(),
+                (int) adjustedX + Layout.DEFENSE_VALUE_X - textWidth / 2,
                 (int) adjustedY + info.yOffset(),
                 TEXT_COLOR
         );
     }
     private void renderDefenses(DrawContext context) {
-        int x = (int)(mainBgX * 1.35f);
-        int y = (int)(mainBgY * 3.1f);
+        int x = backgroundX(Layout.DEFENSES);
+        int y = backgroundY(Layout.DEFENSES);
 
-        renderWithScale(context, x, y, 2.5f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x, y, Layout.LIST_SCALE, (ctx, adjustedX, adjustedY) -> {
             DefenseInfo[] defenses = {
-                    new DefenseInfo("defense.progression-plus.strength_damage_bonus",   240, 60 + PADDING * 1,
+                    new DefenseInfo("defense.progression-plus.strength_damage_bonus",   Layout.LIST_TEXT_X, Layout.ROW_START_Y,
                             playerUpgrades.getUpgradeResistanceBonus(UpgradeType.STRENGTH),
                             playerUpgrades.getLevel(UpgradeType.STRENGTH)),
-                    new DefenseInfo("defense.progression-plus.endurance_health_bonus",  240, 60 + PADDING * 2,
+                    new DefenseInfo("defense.progression-plus.endurance_health_bonus",  Layout.LIST_TEXT_X, Layout.ROW_START_Y + Layout.ROW_SPACING,
                             playerUpgrades.getUpgradeResistanceBonus(UpgradeType.ENDURANCE),
                             playerUpgrades.getLevel(UpgradeType.ENDURANCE)),
-                    new DefenseInfo("defense.progression-plus.agility_deffense_bonus",  240, 60 + PADDING * 3,
+                    new DefenseInfo("defense.progression-plus.agility_deffense_bonus",  Layout.LIST_TEXT_X, Layout.ROW_START_Y + 2 * Layout.ROW_SPACING,
                             playerUpgrades.getUpgradeResistanceBonus(UpgradeType.AGILITY),
                             playerUpgrades.getLevel(UpgradeType.AGILITY)),
-                    new DefenseInfo("defense.progression-plus.luck_bonus",              240, 60 + PADDING * 4,
+                    new DefenseInfo("defense.progression-plus.luck_bonus",              Layout.LIST_TEXT_X, Layout.ROW_START_Y + 3 * Layout.ROW_SPACING,
                             playerUpgrades.getUpgradeResistanceBonus(UpgradeType.LUCK),
                             playerUpgrades.getLevel(UpgradeType.LUCK)),
-                    new DefenseInfo("defense.progression-plus.mining_speed_bonus",      240, 60 + PADDING * 5,
+                    new DefenseInfo("defense.progression-plus.mining_speed_bonus",      Layout.LIST_TEXT_X, Layout.ROW_START_Y + 4 * Layout.ROW_SPACING,
                             playerUpgrades.getUpgradeResistanceBonus(UpgradeType.MINING_SPEED),
                             playerUpgrades.getLevel(UpgradeType.MINING_SPEED)),
             };
@@ -337,9 +397,9 @@ public class UpgradeMenu extends Screen {
         // Используем renderWithScale для масштабирования текста
         // Координаты рассчитываются как смещение от центра карточки
         int centerX = cardBgX + cardBgWidth / 2;
-        int textY = cardBgY + cardBgHeight - (int)(cardBgHeight / 14f);
+        int textY = cardBgY + cardBgHeight - Math.round(cardBgHeight * Layout.CARD_LEVEL_BOTTOM_MARGIN);
 
-        renderWithScale(context, centerX, textY, 2.3f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, centerX, textY, Layout.CARD_LEVEL_SCALE, (ctx, adjustedX, adjustedY) -> {
             // Центрируем текст в масштабированном контексте
             int textWidth = this.textRenderer.getWidth(levelText);
             int centeredX = adjustedX - textWidth / 2;
@@ -349,14 +409,14 @@ public class UpgradeMenu extends Screen {
         });
 
         // Draw player entity
-        int playerScale = (int)(cardBgHeight * 0.3f);
+        int playerScale = Math.round(cardBgHeight * Layout.ENTITY_SIZE_RATIO);
         myDrawEntity(context,
                 cardBgX,
                 cardBgY,
-                (int)(cardBgWidth * 1.13f),
-                (int)(cardBgHeight * 1.13f),
+                cardBgX + cardBgWidth,
+                cardBgY + cardBgHeight,
                 playerScale,
-                0.0625F,
+                Layout.ENTITY_VERTICAL_OFFSET,
                 mouseX,
                 mouseY,
                 client.player);
@@ -365,13 +425,13 @@ public class UpgradeMenu extends Screen {
 
     //  ---------------------  render custom required exp counter  ---------------------
     private void renderRequiredExpCounter(DrawContext context) {
-        int x = (int)(mainBgX * 1.65f);
-        int y = (int)(mainBgY * 2.6);
+        int x = backgroundX(Layout.EXPERIENCE);
+        int y = backgroundY(Layout.EXPERIENCE);
 
         float myCurentExp = this.client.player.totalExperience;
 
         // Первая часть с масштабом 5f
-        renderWithScale(context, x , y, 5f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x , y, Layout.EXPERIENCE_VALUE_SCALE, (ctx, adjustedX, adjustedY) -> {
             String levelText = (int)myCurentExp + " / " + requiredTotalExp;
             int textWidth = this.textRenderer.getWidth(levelText);
             ctx.drawTextWithShadow(this.textRenderer,
@@ -381,11 +441,11 @@ public class UpgradeMenu extends Screen {
 
 
         // Вторая часть с масштабом 2f
-        renderWithScale(context, x, y, 2f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x, y, Layout.EXPERIENCE_LABEL_SCALE, (ctx, adjustedX, adjustedY) -> {
             MutableText underLevelText = Text.translatable("upgrade.progression-plus.required_exp");
             int underTextWidth = this.textRenderer.getWidth(underLevelText);
             ctx.drawTextWithShadow(this.textRenderer, underLevelText,
-                    adjustedX - underTextWidth / 2, adjustedY + PADDING + 8, TEXT_COLOR);
+                    adjustedX - underTextWidth / 2, adjustedY + Layout.EXPERIENCE_LABEL_OFFSET_Y, TEXT_COLOR);
         });
     }
 
@@ -393,10 +453,10 @@ public class UpgradeMenu extends Screen {
     // ---------------------  render bonus indicators  ---------------------
 
     private void renderBonusIndicators(DrawContext context) {
-        int x = (int)(mainBgX * 1.25f);
-        int y = (int)(mainBgY * 3.25f);
+        int x = backgroundX(Layout.INDICATORS);
+        int y = backgroundY(Layout.INDICATORS);
 
-        renderWithScale(context, x, y, 2.5f, (ctx, adjustedX, adjustedY) -> {
+        renderWithScale(context, x, y, Layout.LIST_SCALE, (ctx, adjustedX, adjustedY) -> {
             // Пример индикаторов
             MutableText[] indicatorsText = {
                     Text.translatable("indicator.progression-plus.hp_bonus"),
@@ -412,21 +472,22 @@ public class UpgradeMenu extends Screen {
                     (int)(playerUpgrades.getUpgradeBonus(UpgradeType.MINING_SPEED) * 100) + "%",
             };
 
-            int tempPadding = PADDING;
+            int tempPadding = Layout.ROW_SPACING;
             for (var indicator : indicatorsText){
                 ctx.drawTextWithShadow(this.textRenderer,
                         Text.of(indicator),
-                        adjustedX, adjustedY + 60 + tempPadding, TEXT_COLOR);
-                tempPadding += PADDING;
+                        adjustedX, adjustedY + Layout.ROW_START_Y + tempPadding - Layout.ROW_SPACING, TEXT_COLOR);
+                tempPadding += Layout.ROW_SPACING;
             }
 
-            tempPadding = PADDING;
+            tempPadding = Layout.ROW_SPACING;
             for (var indicatorValue : indicatorsValues){
                 int textWidth = this.textRenderer.getWidth(indicatorValue);
                 ctx.drawTextWithShadow(this.textRenderer,
                         Text.of(indicatorValue),
-                        adjustedX + 180 - textWidth, adjustedY + 60 + tempPadding, TEXT_COLOR);
-                tempPadding += PADDING;
+                        adjustedX + Layout.INDICATOR_VALUE_X - textWidth,
+                        adjustedY + Layout.ROW_START_Y + tempPadding - Layout.ROW_SPACING, TEXT_COLOR);
+                tempPadding += Layout.ROW_SPACING;
             }
         });
     }
@@ -434,7 +495,7 @@ public class UpgradeMenu extends Screen {
 
     // Утилитарная функция для выполнения кода в масштабированном контексте
     private void renderWithScale(DrawContext context, int x, int y, float scaleMultiplier, ScaledRenderer renderer) {
-        float scaleFactor = baseScale * scaleMultiplier;
+        float scaleFactor = textScale(scaleMultiplier);
         int adjustedX = (int)(x / scaleFactor);
         int adjustedY = (int)(y / scaleFactor);
 
@@ -446,6 +507,42 @@ public class UpgradeMenu extends Screen {
         context.getMatrices().pop();
     }
 
+    private float textScale(float multiplier) {
+        return baseScale * multiplier;
+    }
+
+    private int renderedY(int anchorY, float scale, int textOffsetY) {
+        return Math.round(((int) (anchorY / scale) + textOffsetY) * scale);
+    }
+
+    private int centered(int elementWidth) {
+        return this.width / 2 - elementWidth / 2;
+    }
+
+    private int scaled(float referencePixels) {
+        return Math.round(referencePixels * baseScale);
+    }
+
+    private int scaledScreen(float screenFraction) {
+        return Math.round(this.width * screenFraction);
+    }
+
+    private int backgroundX(Point point) {
+        return backgroundX(point.x());
+    }
+
+    private int backgroundY(Point point) {
+        return backgroundY(point.y());
+    }
+
+    private int backgroundX(float offset) {
+        return mainBgX + Math.round(offset * baseScale);
+    }
+
+    private int backgroundY(float offset) {
+        return mainBgY + Math.round(offset * baseScale);
+    }
+
     @Override
     public boolean shouldPause() {
         return false;
@@ -454,26 +551,26 @@ public class UpgradeMenu extends Screen {
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
 
     public static void myDrawEntity(DrawContext context, int x1, int y1, int x2, int y2, int size, float f, float mouseX, float mouseY, LivingEntity entity) {
-        float g = (float)(x1 + x2) / 2.0F;
-        float h = (float)(y1 + y2) / 2.0F;
+        float g = (float) (x1 + x2) / 2.0F;
+        float h = (float) (y1 + y2) / 2.0F;
         context.enableScissor(x1, y1, x2, y2);
-        float i = (float)Math.atan((double)((g - mouseX) / 40.0F));
-        float j = (float)Math.atan((double)((h - mouseY) / 40.0F));
-        Quaternionf quaternionf = (new Quaternionf()).rotateZ(3.1415927F);
-        Quaternionf quaternionf2 = (new Quaternionf()).rotateX(j * 20.0F * 0.017453292F);
+        float i = (float) Math.atan((g - mouseX) / Layout.ENTITY_MOUSE_DIVISOR);
+        float j = (float) Math.atan((h - mouseY) / Layout.ENTITY_MOUSE_DIVISOR);
+        Quaternionf quaternionf = new Quaternionf().rotateZ((float) Math.PI);
+        Quaternionf quaternionf2 = new Quaternionf().rotateX((float) Math.toRadians(j * Layout.ENTITY_TILT_DEGREES));
         quaternionf.mul(quaternionf2);
         float k = entity.bodyYaw;
         float l = entity.getYaw();
         float m = entity.getPitch();
         float n = entity.lastHeadYaw;
         float o = entity.headYaw;
-        entity.bodyYaw = 180.0F + i * 20.0F;
-        entity.setYaw(180.0F + i * 40.0F);
-        entity.setPitch(-j * 20.0F);
+        entity.bodyYaw = 180.0F + i * Layout.ENTITY_BODY_YAW_FACTOR;
+        entity.setYaw(180.0F + i * Layout.ENTITY_HEAD_YAW_FACTOR);
+        entity.setPitch(-j * Layout.ENTITY_TILT_DEGREES);
         entity.headYaw = entity.getYaw();
         entity.lastHeadYaw = entity.getYaw();
         float p = entity.getScale();
-        Vector3f vector3f = new Vector3f(0.0F, entity.getHeight() / 2.0F + f * p, -2.0F);
+        Vector3f vector3f = new Vector3f(0.0F, entity.getHeight() / 2.0F + f * p, Layout.ENTITY_DEPTH);
         float q = (float)size / p;
         InventoryScreen.drawEntity(context, g, h, q, vector3f, quaternionf, quaternionf2, entity);
         entity.bodyYaw = k;

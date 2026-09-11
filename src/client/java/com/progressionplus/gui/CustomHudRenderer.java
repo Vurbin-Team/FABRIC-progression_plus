@@ -1,7 +1,8 @@
 package com.progressionplus.gui;
 
 import com.progressionplus.Progressionplus;
-import com.progressionplus.config.HudConfigLoader;
+import com.progressionplus.data.PlayerComponents;
+import com.progressionplus.upgrades.PlayerUpgrade;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -11,19 +12,41 @@ import net.minecraft.util.Identifier;
 
 public class CustomHudRenderer implements HudRenderCallback {
     private static final Identifier HUD_TEXTURE = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background.png");
-    private static final Identifier HUD_TEXTURE_FLIPPED = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background_flipped.png");
+    private PlayerUpgrade playerUpgrades;
     private static final int HUD_TEXTURE_WIDTH = HudConfigLoader.HUD_WIDTH;
     private static final int HUD_TEXTURE_HEIGHT = HudConfigLoader.HUD_HEIGHT;
+
 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.options.hudHidden) return;
 
-        int screenW = drawContext.getScaledWindowWidth();
-        int screenH = drawContext.getScaledWindowHeight();
-        int hudX = HudConfigLoader.getHudX(screenW);
-        int hudY = HudConfigLoader.getHudY(screenH);
+        if (client.player == null || client.options.hudHidden) return;
+      
+        playerUpgrades = PlayerComponents.PLAYER_UPGRADES.get(client.player).getPlayerUpgrade();
+
+        int screenWidth = drawContext.getScaledWindowWidth();
+        int screenHeight = drawContext.getScaledWindowHeight();
+
+        int HUD_X = screenWidth - HUD_TEXTURE_WIDTH;
+        int HUD_Y = (int) (screenHeight / 1.5f); // Положение текстуры по Y
+
+        // Отрисовка фоновой текстуры
+        drawContext.drawTexture(
+                RenderLayer::getGuiTextured,
+                HUD_TEXTURE,
+                HUD_X,
+                HUD_Y,
+                0, 0,
+                HUD_TEXTURE_WIDTH,
+                HUD_TEXTURE_HEIGHT,
+                HUD_TEXTURE_WIDTH,
+                HUD_TEXTURE_HEIGHT
+        );
+
+        // Получение значений опыта и уровня
+        String currentExp = client.player.totalExperience + "";
+        String currentLevel = playerUpgrades.getTotalLevels() + " lvl";
 
         // Используем метод для определения стороны
         boolean isOnRightSide = HudConfigLoader.isOnRight(screenW);
