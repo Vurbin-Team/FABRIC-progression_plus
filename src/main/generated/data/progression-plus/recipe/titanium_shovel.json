@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "progression-plus:titanium_ingot",
+    "S": "progression-plus:deepslate_handle"
+  },
+  "pattern": [
+    "R",
+    "S",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "progression-plus:titanium_shovel"
+  }
+}

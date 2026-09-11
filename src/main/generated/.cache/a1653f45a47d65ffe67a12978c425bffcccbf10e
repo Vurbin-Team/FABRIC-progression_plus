@@ -1,0 +1,5 @@
+// 1.21.5	-999999999-01-01T00:00:00	progression-plus/Tags for minecraft:block
+5bef1bd3262264772dfc1ec4cf5ce04c9065c084 data/minecraft/tags/block/mineable/pickaxe.json
+b5ade34e4ee040ba505cfbcd9ab509fb041f03bf data/minecraft/tags/block/needs_diamond_tool.json
+46aea1b69bd1480575f0d885f61cf46eb9c0ab66 data/minecraft/tags/block/needs_iron_tool.json
+ba0df72853e83cec9fc347af82d99c00bbde4936 data/progression-plus/tags/block/needs_titanium_tool.json

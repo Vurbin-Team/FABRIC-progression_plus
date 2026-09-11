@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "progression-plus:titanium_ingot",
+    "B": "minecraft:glass_bottle",
+    "R": "minecraft:deepslate_bricks",
+    "T": "progression-plus:titanium_block"
+  },
+  "pattern": [
+    "#R#",
+    "#B#",
+    "RTR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "progression-plus:experience_storage_pedestal"
+  }
+}

@@ -2,16 +2,26 @@ package com.progressionplus;
 
 import com.progressionplus.config.UpgradeConfigLoader;
 import com.progressionplus.data.PlayerComponents;
-import com.progressionplus.data.PlayerUpgradeData;
 import com.progressionplus.network.ModMessages;
 import com.progressionplus.network.ServerDimensionSwitch;
-import com.progressionplus.playerResistances.DamageEventHandler;
+import com.progressionplus.registry.ModBlocks;
+import com.progressionplus.registry.ModItemGroups;
+import com.progressionplus.registry.ModItems;
+import com.progressionplus.registry.block.ModBlockEntities;
+import com.progressionplus.sounds.ModSounds;
+import com.progressionplus.util.ModFeatures;
+import com.progressionplus.world.ModPlacedFeatures;
+import com.progressionplus.world.gen.ModWorldGeneration;
+import com.progressionplus.world.structure.SpawnEventHandler;
 import net.fabricmc.api.ModInitializer;
 
 import com.progressionplus.config.UpgradeConfig;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.gen.GenerationStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,23 +37,28 @@ public class Progressionplus implements ModInitializer {
 		UpgradeConfig.init();
 		UpgradeConfigLoader.load();
 		ModMessages.init();
+		ModSounds.registerSounds();
+
+		ModBlocks.register();
+		ModItems.registerModItems();
+		ModItemGroups.register();
+		ModWorldGeneration.generateModWorldGen();
+		SpawnEventHandler.initialize();
+		ModBlockEntities.registerBlockEntities();
+		ModFeatures.registerFeatures();
+
+		BiomeModifications.addFeature(
+				BiomeSelectors.foundInOverworld(),
+				GenerationStep.Feature.UNDERGROUND_DECORATION,
+				ModPlacedFeatures.SKINT_STALAGMITE_PLACED_KEY
+		);
 
 		// Add player join/leave handlers
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
 			ServerPlayerEntity player = handler.player;
-			var upgradeData = PlayerComponents.PLAYER_UPGRADES.get(player);
 			ModMessages.onPlayerJoin(player);
-			upgradeData.logUpgrades(player);
-		});
-
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
-			ServerPlayerEntity player = handler.player;
-			var upgradeData = PlayerComponents.PLAYER_UPGRADES.get(player);
-			upgradeData.logUpgrades(player);
 		});
 
 		ServerEntityEvents.ENTITY_LOAD.register(ServerDimensionSwitch::Register);
-
-		LOGGER.info("Progression+ initialized successfully!");
 	}
 }

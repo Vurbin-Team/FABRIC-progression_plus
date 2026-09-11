@@ -1,17 +1,17 @@
 {
 	"schemaVersion": 1,
 	"id": "progression-plus",
-	"version": "1.0.0",
+	"version": "1.3.0",
 	"name": "progression-plus",
 	"description": "Player progression system",
 	"authors": [
 		"Vurbin"
 	],
 	"contact": {
-		"homepage": "https://t.me/Vitalas_P",
+		"homepage": "https://modrinth.com/mod/progression+",
 		"sources": "https://github.com/vitaliy65/FABRIC-progression_plus-1.21.5.git"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/progression-plus/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -24,6 +24,9 @@
 		"cardinal-components": [
 			"com.progressionplus.data.PlayerComponents"
 		],
+		"modmenu": [
+			"com.progressionplus.gui.ModMenuApiImpl"
+		],
 		"fabric-datagen": [
 			"com.progressionplus.ProgressionplusDataGenerator"
 		]
@@ -31,8 +34,14 @@
 	"custom": {
 		"cardinal-components": [
 			"progression-plus:upgrades"
-		]
+		],
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.gg/8ag6yKfPsb"
+			}
+		}
 	},
+
 	"mixins": [
 		"progression-plus.mixins.json",
 		{

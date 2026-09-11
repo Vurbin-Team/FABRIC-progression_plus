@@ -1,0 +1,17 @@
+{
+  "type": "progression-plus:stalagmite",
+  "config": {
+    "block": {
+      "Name": "progression-plus:yellow_skint_block"
+    },
+    "max_height": 11,
+    "min_height": 5,
+    "skintCluster": {
+      "Name": "progression-plus:yellow_skint_crystal",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    }
+  }
+}

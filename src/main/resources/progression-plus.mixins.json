@@ -1,15 +1,18 @@
 {
-	"required": true,
-	"package": "com.progressionplus.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"damageReduction",
-		"syncUpgradesOnDeath"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "com.progressionplus.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilScreenHandlerMixin",
+    "damageReduction",
+    "PlayerManagerMixin",
+    "ServerPlayerEntityMixin",
+    "syncUpgradesOnDeath"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

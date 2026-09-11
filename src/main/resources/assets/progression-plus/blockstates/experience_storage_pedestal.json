@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"half=lower,waterlogged=false": {
+			"model": "progression-plus:block/lower_exp_storage_pedestal"
+		},
+		"half=upper,waterlogged=false": {
+			"model": "progression-plus:block/upper_exp_storage_pedestal"
+		},
+		"half=lower,waterlogged=true": {
+			"model": "progression-plus:block/lower_exp_storage_pedestal"
+		},
+		"half=upper,waterlogged=true": {
+			"model": "progression-plus:block/upper_exp_storage_pedestal"
+		}
+	}
+}

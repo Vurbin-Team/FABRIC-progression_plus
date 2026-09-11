@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "progression-plus:block/yellow_skint_crystal"
+  }
+}

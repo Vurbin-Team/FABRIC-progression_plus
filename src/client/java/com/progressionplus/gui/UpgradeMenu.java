@@ -3,6 +3,7 @@ package com.progressionplus.gui;
 import com.progressionplus.Progressionplus;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.network.ClientModMessages;
+import com.progressionplus.sounds.ModSounds;
 import com.progressionplus.upgrade.UpgradeType;
 import com.progressionplus.upgrades.PlayerUpgrade;
 import net.minecraft.client.gui.DrawContext;
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -173,6 +175,9 @@ public class UpgradeMenu extends Screen {
         ButtonWidget button = new TexturedButtonWidget(x, y, buttonSize, buttonSize, BUTTON_TEXTURES, btn -> {
             ClientModMessages.sendSyncPacketToServer(type, client.player);
 
+            // Звук при нажатии кнопки
+            client.getSoundManager().play(PositionedSoundInstance.master(ModSounds.BUTTON_UPGRADE, 1.0F));
+
             // Обновляем состояние всех кнопок
             updateButtonStates();
         });
@@ -311,8 +316,10 @@ public class UpgradeMenu extends Screen {
 
     //  ---------------------  render defense stats  ---------------------
     private record DefenseInfo(String translationKey, int xOffset, int yOffset, float resistancePerLevel, int upgradeLevel) {}
+
     private void renderDefense(DrawContext context, int adjustedX, int adjustedY, DefenseInfo info) {
         boolean isMaxLevel = info.upgradeLevel() == PlayerUpgrade.getMaxLevel();
+
 
         int resistencePerLevel = (int) (info.resistancePerLevel() * Layout.PERCENTAGE_MULTIPLIER);
         int pracentage = resistencePerLevel * info.upgradeLevel();

@@ -12,16 +12,17 @@ import net.minecraft.util.Identifier;
 
 public class CustomHudRenderer implements HudRenderCallback {
     private static final Identifier HUD_TEXTURE = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background.png");
-    private static final int HUD_TEXTURE_WIDTH = 75;
-    private static final int HUD_TEXTURE_HEIGHT = 38;
     private PlayerUpgrade playerUpgrades;
+    private static final int HUD_TEXTURE_WIDTH = HudConfigLoader.HUD_WIDTH;
+    private static final int HUD_TEXTURE_HEIGHT = HudConfigLoader.HUD_HEIGHT;
+
 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter renderTickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.player == null || client.options.hudHidden) return;
-
+      
         playerUpgrades = PlayerComponents.PLAYER_UPGRADES.get(client.player).getPlayerUpgrade();
 
         int screenWidth = drawContext.getScaledWindowWidth();
@@ -47,22 +48,49 @@ public class CustomHudRenderer implements HudRenderCallback {
         String currentExp = client.player.totalExperience + "";
         String currentLevel = playerUpgrades.getTotalLevels() + " lvl";
 
-        // Центр текстуры
-        int centerX = HUD_X + (int)(HUD_TEXTURE_WIDTH / 1.6f);
+        // Используем метод для определения стороны
+        boolean isOnRightSide = HudConfigLoader.isOnRight(screenW);
 
-        // Высоты строк (4 равные полосы)
+        // Рендерим фон, флип по X если нужно
+        if (isOnRightSide) {
+            drawContext.drawTexture(
+                    RenderLayer::getGuiTextured,
+                    HUD_TEXTURE,
+                    hudX, hudY,
+                    0, 0,
+                    HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT,
+                    HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT
+            );
+        } else {
+            drawContext.drawTexture(
+                    RenderLayer::getGuiTextured,
+                    HUD_TEXTURE_FLIPPED,
+                    hudX, hudY,
+                    HUD_TEXTURE_WIDTH, 0,
+                    HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT,
+                    HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT
+            );
+        }
+
+        // Текст опыта и уровня
+        String currentExp = String.valueOf(client.player.totalExperience);
+        String currentLevel = client.player.experienceLevel + " lvl";
+
+        int centerX = hudX + HUD_TEXTURE_WIDTH / 2;
         int lineHeight = HUD_TEXTURE_HEIGHT / 3;
+        int firstLineY = hudY + lineHeight / 2;
+        int thirdLineY = hudY + lineHeight * 2;
 
-        // Позиции текста
-        int firstLineY = HUD_Y + lineHeight /2 ;
-        int thirdLineY = HUD_Y + (lineHeight * 2);
-
-        // Ширина текста
         int expWidth = client.textRenderer.getWidth(currentExp);
         int levelWidth = client.textRenderer.getWidth(currentLevel);
 
-        // Отрисовка текста по центру
-        drawContext.drawText(client.textRenderer, currentExp, centerX - expWidth / 2, firstLineY, 0xFFFFFF, true);
-        drawContext.drawText(client.textRenderer, currentLevel, centerX - levelWidth / 2, thirdLineY, 0xFFFFFF, true);
+        if(isOnRightSide){
+            drawContext.drawText(client.textRenderer, currentExp, centerX - expWidth / 2 + 10, firstLineY, 0xFFFFFF, true);
+            drawContext.drawText(client.textRenderer, currentLevel, centerX - levelWidth / 2 + 10, thirdLineY, 0xFFFFFF, true);
+        }
+        else {
+            drawContext.drawText(client.textRenderer, currentExp, centerX - expWidth / 2 - 10, firstLineY, 0xFFFFFF, true);
+            drawContext.drawText(client.textRenderer, currentLevel, centerX - levelWidth / 2 - 10, thirdLineY, 0xFFFFFF, true);
+        }
     }
 }

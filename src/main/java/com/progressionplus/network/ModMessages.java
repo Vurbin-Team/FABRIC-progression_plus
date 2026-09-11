@@ -8,8 +8,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.progressionplus.Progressionplus.LOGGER;
-
 public class ModMessages {
     public static final int damage = 1;
     public static final double movement_speed = 0.1; // Базовая скорость игрока в Minecraft
