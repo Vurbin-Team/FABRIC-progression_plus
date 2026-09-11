@@ -48,8 +48,8 @@ public class UpgradeMenu extends Screen {
      * 1920 x 1080 reference canvas, relative to the main panel's top-left.
      */
     private static final class Layout {
-        private static final int REFERENCE_WIDTH = 1_920;
-        private static final int REFERENCE_HEIGHT = 1_080;
+        private static final int REFERENCE_WIDTH = 1920;
+        private static final int REFERENCE_HEIGHT = 1080;
         private static final float TEXTURE_SCALE = 2.5f;
         private static final float MAIN_PANEL_WIDTH = 480;
         private static final float MAIN_PANEL_HEIGHT = 270;
@@ -173,6 +173,7 @@ public class UpgradeMenu extends Screen {
 
     private ButtonWidget createUpgradeButton(UpgradeType type, int x, int y, int buttonSize) {
         ButtonWidget button = new TexturedButtonWidget(x, y, buttonSize, buttonSize, BUTTON_TEXTURES, btn -> {
+            Progressionplus.LOGGER.debug("Upgrade button pressed ------------ " + type);
             ClientModMessages.sendSyncPacketToServer(type, client.player);
 
             // Звук при нажатии кнопки
@@ -318,9 +319,6 @@ public class UpgradeMenu extends Screen {
     private record DefenseInfo(String translationKey, int xOffset, int yOffset, float resistancePerLevel, int upgradeLevel) {}
 
     private void renderDefense(DrawContext context, int adjustedX, int adjustedY, DefenseInfo info) {
-        boolean isMaxLevel = info.upgradeLevel() == PlayerUpgrade.getMaxLevel();
-
-
         int resistencePerLevel = (int) (info.resistancePerLevel() * Layout.PERCENTAGE_MULTIPLIER);
         int pracentage = resistencePerLevel * info.upgradeLevel();
 
@@ -329,8 +327,6 @@ public class UpgradeMenu extends Screen {
 
         MutableText coloredPrefix = Text.literal(pracentage + "")
                 .styled(style -> style.withColor(Formatting.YELLOW));
-
-        if (isMaxLevel) resistencePerLevel = 0;
 
         context.drawTextWithShadow(
                 this.textRenderer,

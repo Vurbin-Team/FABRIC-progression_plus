@@ -1,6 +1,7 @@
 package com.progressionplus.gui;
 
 import com.progressionplus.Progressionplus;
+import com.progressionplus.config.HudConfigLoader;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.upgrades.PlayerUpgrade;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -10,8 +11,12 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
+import static com.progressionplus.config.HudConfigLoader.getHudX;
+import static com.progressionplus.config.HudConfigLoader.getHudY;
+
 public class CustomHudRenderer implements HudRenderCallback {
     private static final Identifier HUD_TEXTURE = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background.png");
+    private static final Identifier HUD_TEXTURE_FLIPPED = Identifier.of(Progressionplus.MOD_ID, "textures/gui/exp_counter_background_flipped.png");
     private PlayerUpgrade playerUpgrades;
     private static final int HUD_TEXTURE_WIDTH = HudConfigLoader.HUD_WIDTH;
     private static final int HUD_TEXTURE_HEIGHT = HudConfigLoader.HUD_HEIGHT;
@@ -27,36 +32,23 @@ public class CustomHudRenderer implements HudRenderCallback {
 
         int screenWidth = drawContext.getScaledWindowWidth();
         int screenHeight = drawContext.getScaledWindowHeight();
-
-        int HUD_X = screenWidth - HUD_TEXTURE_WIDTH;
-        int HUD_Y = (int) (screenHeight / 1.5f); // Положение текстуры по Y
-
-        // Отрисовка фоновой текстуры
-        drawContext.drawTexture(
-                RenderLayer::getGuiTextured,
-                HUD_TEXTURE,
-                HUD_X,
-                HUD_Y,
-                0, 0,
-                HUD_TEXTURE_WIDTH,
-                HUD_TEXTURE_HEIGHT,
-                HUD_TEXTURE_WIDTH,
-                HUD_TEXTURE_HEIGHT
-        );
+//
+//        int HUD_X = screenWidth - HUD_TEXTURE_WIDTH;
+//        int HUD_Y = (int) (screenHeight / 1.5f); // Положение текстуры по Y
 
         // Получение значений опыта и уровня
         String currentExp = client.player.totalExperience + "";
         String currentLevel = playerUpgrades.getTotalLevels() + " lvl";
 
         // Используем метод для определения стороны
-        boolean isOnRightSide = HudConfigLoader.isOnRight(screenW);
+        boolean isOnRightSide = HudConfigLoader.isOnRight(screenWidth);
 
         // Рендерим фон, флип по X если нужно
         if (isOnRightSide) {
             drawContext.drawTexture(
                     RenderLayer::getGuiTextured,
                     HUD_TEXTURE,
-                    hudX, hudY,
+                    getHudX(screenWidth), getHudY(screenHeight),
                     0, 0,
                     HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT,
                     HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT
@@ -65,21 +57,17 @@ public class CustomHudRenderer implements HudRenderCallback {
             drawContext.drawTexture(
                     RenderLayer::getGuiTextured,
                     HUD_TEXTURE_FLIPPED,
-                    hudX, hudY,
+                    getHudX(screenWidth), getHudY(screenHeight),
                     HUD_TEXTURE_WIDTH, 0,
                     HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT,
                     HUD_TEXTURE_WIDTH, HUD_TEXTURE_HEIGHT
             );
         }
 
-        // Текст опыта и уровня
-        String currentExp = String.valueOf(client.player.totalExperience);
-        String currentLevel = client.player.experienceLevel + " lvl";
-
-        int centerX = hudX + HUD_TEXTURE_WIDTH / 2;
+        int centerX = getHudX(screenWidth) + HUD_TEXTURE_WIDTH / 2;
         int lineHeight = HUD_TEXTURE_HEIGHT / 3;
-        int firstLineY = hudY + lineHeight / 2;
-        int thirdLineY = hudY + lineHeight * 2;
+        int firstLineY = getHudY(screenHeight) + lineHeight / 2;
+        int thirdLineY = getHudY(screenHeight) + lineHeight * 2;
 
         int expWidth = client.textRenderer.getWidth(currentExp);
         int levelWidth = client.textRenderer.getWidth(currentLevel);

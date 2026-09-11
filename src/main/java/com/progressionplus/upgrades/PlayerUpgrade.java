@@ -11,6 +11,10 @@ import java.util.Map;
 public class PlayerUpgrade {
     private final Map<UpgradeType, Integer> upgrades = new EnumMap<>(UpgradeType.class);
 
+    public int getMaxLevel() {
+        return upgrades.size() * UpgradeConfig.getMaxUpgradeLevel();
+    }
+
     public void addLevel(UpgradeType upgradeType) {
         upgrades.put(upgradeType, upgrades.getOrDefault(upgradeType, 0) + 1);
     }
