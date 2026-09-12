@@ -30,13 +30,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 offerSmelting(PINK_GARNET_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 10f, 200, "titanium_ingot");
                 offerBlasting(PINK_GARNET_SMELTABLES, RecipeCategory.MISC, ModItems.TITANIUM_INGOT, 10f, 100, "titanium_ingot");
 
-                createShaped(RecipeCategory.MISC, ModItems.DEEPSLATE_HANDLE)
-                        .pattern("R")
-                        .pattern("R")
-                        .input('R', Items.COBBLED_DEEPSLATE)
-                        .criterion(hasItem(Items.COBBLED_DEEPSLATE), conditionsFromItem(Items.COBBLED_DEEPSLATE))
-                        .offerTo(exporter);
-
                 createShaped(RecipeCategory.MISC, ModItems.TITANIUM_BOOTS)
                         .pattern("R R")
                         .pattern("R R")
@@ -90,9 +83,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("R")
                         .pattern("S")
                         .input('R', ModItems.TITANIUM_INGOT)
-                        .input('S', ModItems.DEEPSLATE_HANDLE)
+                        .input('S', Items.STICK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
-                        .criterion(hasItem(ModItems.DEEPSLATE_HANDLE), conditionsFromItem(ModItems.DEEPSLATE_HANDLE))
+                        .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.MISC, ModItems.TITANIUM_PICKAXE)
@@ -100,9 +93,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern(" S ")
                         .pattern(" S ")
                         .input('R', ModItems.TITANIUM_INGOT)
-                        .input('S', ModItems.DEEPSLATE_HANDLE)
+                        .input('S', Items.STICK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
-                        .criterion(hasItem(ModItems.DEEPSLATE_HANDLE), conditionsFromItem(ModItems.DEEPSLATE_HANDLE))
+                        .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.MISC, ModItems.TITANIUM_SHOVEL)
@@ -110,9 +103,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("S")
                         .pattern("S")
                         .input('R', ModItems.TITANIUM_INGOT)
-                        .input('S', ModItems.DEEPSLATE_HANDLE)
+                        .input('S', Items.STICK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
-                        .criterion(hasItem(ModItems.DEEPSLATE_HANDLE), conditionsFromItem(ModItems.DEEPSLATE_HANDLE))
+                        .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.MISC, ModItems.TITANIUM_AXE)
@@ -120,9 +113,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("RS")
                         .pattern(" S")
                         .input('R', ModItems.TITANIUM_INGOT)
-                        .input('S', ModItems.DEEPSLATE_HANDLE)
+                        .input('S', Items.STICK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
-                        .criterion(hasItem(ModItems.DEEPSLATE_HANDLE), conditionsFromItem(ModItems.DEEPSLATE_HANDLE))
+                        .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.MISC, ModItems.TITANIUM_HOE)
@@ -130,9 +123,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern(" S")
                         .pattern(" S")
                         .input('R', ModItems.TITANIUM_INGOT)
-                        .input('S', ModItems.DEEPSLATE_HANDLE)
+                        .input('S', Items.STICK)
                         .criterion(hasItem(ModItems.TITANIUM_INGOT), conditionsFromItem(ModItems.TITANIUM_INGOT))
-                        .criterion(hasItem(ModItems.DEEPSLATE_HANDLE), conditionsFromItem(ModItems.DEEPSLATE_HANDLE))
+                        .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.MISC, ModBlocks.SKINT_BRICKS)
@@ -170,16 +163,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Blocks.DEEPSLATE_BRICKS), conditionsFromItem(Blocks.DEEPSLATE_BRICKS))
                         .criterion(hasItem(Items.GLASS_BOTTLE), conditionsFromItem(Items.GLASS_BOTTLE))
                         .criterion(hasItem(ModBlocks.TITANIUM_BLOCK), conditionsFromItem(ModBlocks.TITANIUM_BLOCK))
-                        .offerTo(exporter);
-
-                createShaped(RecipeCategory.MISC, ModItems.SKINT_CORE)
-                        .pattern(" # ")
-                        .pattern("#R#")
-                        .pattern(" # ")
-                        .input('#', Items.DEEPSLATE_BRICKS)
-                        .input('R', ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2)
-                        .criterion(hasItem(Items.DEEPSLATE_BRICKS), conditionsFromItem(Items.DEEPSLATE_BRICKS))
-                        .criterion(hasItem(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2), conditionsFromItem(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2))
                         .offerTo(exporter);
             }
         };

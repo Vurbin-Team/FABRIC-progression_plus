@@ -55,8 +55,8 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                         null, // background
                         AdvancementFrame.TASK,
                         true, // showToast
-                        false, // announceToChat
-                        true // hidden
+                        true, // announceToChat
+                        false // hidden
                 )
                 .criterion("has_grand_exp_bottle", InventoryChangedCriterion.Conditions.items(ModItems.GRAND_EXP_BOTTLE))
                 .criterion("has_glow_ink_sac", InventoryChangedCriterion.Conditions.items(Items.GLOW_INK_SAC))
