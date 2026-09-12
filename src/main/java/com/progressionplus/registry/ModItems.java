@@ -26,12 +26,6 @@ public class ModItems {
     public static final Item TITANIUM_INGOT = registerItem("titanium_ingot",
             new Item(new FabricItemSettings()));
 
-    public static final Item DEEPSLATE_HANDLE = registerItem("deepslate_handle",
-            new Item(new FabricItemSettings()));
-
-    public static final Item SKINT_CORE = registerItem("skint_core",
-            new Item(new FabricItemSettings()));
-
     public static final Item YELLOW_SKINT_CRYSTAL_SHARD_2 = registerItem("yellow_skint_crystal_shard_2",
             new Item(new FabricItemSettings()));
 
@@ -51,9 +45,6 @@ public class ModItems {
     // Tool Items
     public static final Item TITANIUM_SWORD = registerItem("titanium_sword",
             new SwordItem(ModToolMaterials.TITANIUM, 3, -2.4f, new FabricItemSettings()));
-
-    public static final Item CHARGED_TITANIUM_SWORD = registerItem("charged_titanium_sword",
-            new ChargedTitaniumSwordItem(ModToolMaterials.TITANIUM, 4, -2.4f, new FabricItemSettings()));
 
     public static final Item TITANIUM_PICKAXE = registerItem("titanium_pickaxe",
             new PickaxeItem(ModToolMaterials.TITANIUM, 1, -2.8f, new FabricItemSettings()));

@@ -26,7 +26,6 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.TITANIUM_INGOT, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAW_TITANIUM_ORE, Models.GENERATED);
-        itemModelGenerator.register(ModItems.DEEPSLATE_HANDLE, Models.GENERATED);
         itemModelGenerator.register(ModItems.YELLOW_SKINT_CRYSTAL_SHARD_2, Models.GENERATED);
         itemModelGenerator.register(ModBlocks.YELLOW_SKINT_CRYSTAL.asItem(), Models.GENERATED);
 

@@ -18,8 +18,6 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(ItemTags.SWORDS)
                 .add(ModItems.TITANIUM_SWORD);
-        getOrCreateTagBuilder(ItemTags.SWORDS)
-                .add(ModItems.CHARGED_TITANIUM_SWORD);
         getOrCreateTagBuilder(ItemTags.PICKAXES)
                 .add(ModItems.TITANIUM_PICKAXE);
         getOrCreateTagBuilder(ItemTags.SHOVELS)

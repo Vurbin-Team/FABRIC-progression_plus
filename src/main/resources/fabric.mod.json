@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "progression-plus",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "name": "progression-plus",
   "description": "Player progression system",
   "authors": ["Vurbin"],
