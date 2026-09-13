@@ -3,10 +3,8 @@ package com.progressionplus.playerResistances;
 import com.progressionplus.config.UpgradeConfig;
 import com.progressionplus.data.PlayerComponents;
 import com.progressionplus.upgrade.UpgradeType;
-import net.minecraft.entity.damage.DamageEffects;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class DamageResistanceHandler {
@@ -62,7 +60,6 @@ public class DamageResistanceHandler {
                         damageSource.isOf(DamageTypes.CRAMMING) ||
                         damageSource.isOf(DamageTypes.DROWN) ||
                         damageSource.isOf(DamageTypes.STARVE)||
-                        damageSource.isOf(DamageTypes.MACE_SMASH) ||
                         damageSource.isOf(DamageTypes.MOB_PROJECTILE) ||
                         damageSource.isOf(DamageTypes.THORNS) ){
                     return baseResistance;
@@ -87,8 +84,7 @@ public class DamageResistanceHandler {
                 if (damageSource.isOf(DamageTypes.MAGIC) ||
                         damageSource.isOf(DamageTypes.INDIRECT_MAGIC) ||
                         damageSource.isOf(DamageTypes.WITHER) ||
-                        damageSource.isOf(DamageTypes.DRAGON_BREATH)||
-                        damageSource.isOf(DamageTypes.ENDER_PEARL)) {
+                        damageSource.isOf(DamageTypes.DRAGON_BREATH)) {
                     return baseResistance;
                 }
             }

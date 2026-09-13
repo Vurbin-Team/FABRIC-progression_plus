@@ -130,20 +130,20 @@ public class ExperienceStoragePedestalEntity extends BlockEntity implements Impl
         super.readNbt(nbt, registryLookup);
         Inventories.readNbt(nbt, inventory, registryLookup);
         if (nbt.contains("StoredExperience")) {
-            storedExperience = nbt.getInt("StoredExperience").get();
+            storedExperience = nbt.getInt("StoredExperience");
         } else {
             storedExperience = 0;
         }
     }
-
-    @Override
-    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
-        // Дропаем предметы только если есть что дропать
-        if (!this.isEmpty()) {
-            ItemScatterer.spawn(world, pos, this);
-        }
-        super.onBlockReplaced(pos, oldState);
-    }
+//
+//    @Override
+//    public void onBlockReplaced(BlockPos pos, BlockState oldState) {
+//        // Дропаем предметы только если есть что дропать
+//        if (!this.isEmpty()) {
+//            ItemScatterer.spawn(world, pos, this);
+//        }
+//        super.onBlockReplaced(pos, oldState);
+//    }
 
     @Override
     public BlockPos getScreenOpeningData(ServerPlayerEntity player) {

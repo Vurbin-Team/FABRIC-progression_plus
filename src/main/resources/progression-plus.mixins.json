@@ -3,7 +3,6 @@
   "package": "com.progressionplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AnvilScreenHandlerMixin",
     "damageReduction",
     "PlayerManagerMixin",
     "ServerPlayerEntityMixin",

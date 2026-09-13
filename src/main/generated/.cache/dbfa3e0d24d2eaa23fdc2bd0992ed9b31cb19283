@@ -1,10 +1,10 @@
-// 1.21.5	-999999999-01-01T00:00:00	progression-plus/Tags for minecraft:item
-2be527363632713db236441aee747dcf88df47bd data/minecraft/tags/item/axes.json
-3bcf2a6c71ec2d4350175c6ec30d5d8a6a938d2e data/minecraft/tags/item/hoes.json
-1a4df1cbae7d7e3f22588338341b98759f1eaaec data/minecraft/tags/item/pickaxes.json
-ac205e831ed92a2b5828895b197194fda303f552 data/minecraft/tags/item/shovels.json
-7550ab454fbac7f1ea7cdf02335fe704b431c931 data/minecraft/tags/item/swords.json
-24ac27615eb42c8e10d749208e0ad4a368b99301 data/minecraft/tags/item/trim_materials.json
-84414bec00b616547511f6cdb4b84ae17ef3a16b data/minecraft/tags/item/trimmable_armor.json
-24ac27615eb42c8e10d749208e0ad4a368b99301 data/progression-plus/tags/item/titanitum_tool_material.json
-24ac27615eb42c8e10d749208e0ad4a368b99301 data/progression-plus/tags/item/transformable_items.json
+// 1.21.1	2026-09-13T10:31:42.7608762	progression-plus/Tags for minecraft:item
+1a4df1cbae7d7e3f22588338341b98759f1eaaec data\minecraft\tags\item\pickaxes.json
+84414bec00b616547511f6cdb4b84ae17ef3a16b data\minecraft\tags\item\trimmable_armor.json
+24ac27615eb42c8e10d749208e0ad4a368b99301 data\progression-plus\tags\item\titanitum_tool_material.json
+ac205e831ed92a2b5828895b197194fda303f552 data\minecraft\tags\item\shovels.json
+7550ab454fbac7f1ea7cdf02335fe704b431c931 data\minecraft\tags\item\swords.json
+24ac27615eb42c8e10d749208e0ad4a368b99301 data\minecraft\tags\item\trim_materials.json
+2be527363632713db236441aee747dcf88df47bd data\minecraft\tags\item\axes.json
+24ac27615eb42c8e10d749208e0ad4a368b99301 data\progression-plus\tags\item\transformable_items.json
+3bcf2a6c71ec2d4350175c6ec30d5d8a6a938d2e data\minecraft\tags\item\hoes.json

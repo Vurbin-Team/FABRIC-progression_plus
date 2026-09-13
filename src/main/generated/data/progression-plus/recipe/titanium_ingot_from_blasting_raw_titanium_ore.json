@@ -4,7 +4,9 @@
   "cookingtime": 100,
   "experience": 10.0,
   "group": "titanium_ingot",
-  "ingredient": "progression-plus:raw_titanium_ore",
+  "ingredient": {
+    "item": "progression-plus:raw_titanium_ore"
+  },
   "result": {
     "id": "progression-plus:titanium_ingot"
   }

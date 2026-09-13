@@ -1,7 +1,7 @@
-// 1.21.5	-999999999-01-01T00:00:00	progression-plus/Block Loot Tables
-4176f61c09f6ca69b2c8fb8e6b555cfe0778d7bd data/progression-plus/loot_table/blocks/deepslate_titanium_ore_block.json
-a6e17e518854977aca7b1a09a0242ec32b8f5d44 data/progression-plus/loot_table/blocks/experience_storage_pedestal.json
-c67d7204ed8ea97341a1f06d6e5965371ff83754 data/progression-plus/loot_table/blocks/skint_bricks.json
-3863671299a8631c072cc421d8b92ddeceb2ae30 data/progression-plus/loot_table/blocks/titanium_block.json
-ac813806335d1466000dedd6a7ae9b0f0c0536bc data/progression-plus/loot_table/blocks/yellow_skint_block.json
-d06c14092f87214fe901555968d9f627e1a0e3dc data/progression-plus/loot_table/blocks/yellow_skint_crystal.json
+// 1.21.1	2026-09-13T10:31:42.7654301	progression-plus/Block Loot Tables
+ac813806335d1466000dedd6a7ae9b0f0c0536bc data\progression-plus\loot_table\blocks\yellow_skint_block.json
+a6e17e518854977aca7b1a09a0242ec32b8f5d44 data\progression-plus\loot_table\blocks\experience_storage_pedestal.json
+3863671299a8631c072cc421d8b92ddeceb2ae30 data\progression-plus\loot_table\blocks\titanium_block.json
+4176f61c09f6ca69b2c8fb8e6b555cfe0778d7bd data\progression-plus\loot_table\blocks\deepslate_titanium_ore_block.json
+c67d7204ed8ea97341a1f06d6e5965371ff83754 data\progression-plus\loot_table\blocks\skint_bricks.json
+d06c14092f87214fe901555968d9f627e1a0e3dc data\progression-plus\loot_table\blocks\yellow_skint_crystal.json

@@ -50,7 +50,7 @@ public class PlayerUpgradeData implements Component, RespawnableComponent {
 
             for (String key : nbtCompound.getKeys()) {
                 if (!key.equals(UPGRADE_KEY.toString())) {
-                    int value = nbtCompound.getInt(key).orElse(0); // This returns a primitive int
+                    int value = nbtCompound.getInt(key); // This returns a primitive int
                     upgrades.put(key, value);
                 }
             }

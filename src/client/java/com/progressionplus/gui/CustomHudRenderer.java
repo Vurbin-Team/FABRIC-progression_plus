@@ -46,7 +46,6 @@ public class CustomHudRenderer implements HudRenderCallback {
         // Рендерим фон, флип по X если нужно
         if (isOnRightSide) {
             drawContext.drawTexture(
-                    RenderLayer::getGuiTextured,
                     HUD_TEXTURE,
                     getHudX(screenWidth), getHudY(screenHeight),
                     0, 0,
@@ -55,7 +54,6 @@ public class CustomHudRenderer implements HudRenderCallback {
             );
         } else {
             drawContext.drawTexture(
-                    RenderLayer::getGuiTextured,
                     HUD_TEXTURE_FLIPPED,
                     getHudX(screenWidth), getHudY(screenHeight),
                     HUD_TEXTURE_WIDTH, 0,

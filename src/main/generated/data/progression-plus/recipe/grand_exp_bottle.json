@@ -2,12 +2,24 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": "minecraft:experience_bottle",
-    "A": "minecraft:glow_ink_sac",
-    "B": "minecraft:echo_shard",
-    "C": "minecraft:nether_wart",
-    "D": "minecraft:resin_clump",
-    "E": "minecraft:glass_bottle"
+    "#": {
+      "item": "minecraft:experience_bottle"
+    },
+    "A": {
+      "item": "minecraft:glow_ink_sac"
+    },
+    "B": {
+      "item": "minecraft:echo_shard"
+    },
+    "C": {
+      "item": "minecraft:nether_wart"
+    },
+    "D": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "minecraft:glass_bottle"
+    }
   },
   "pattern": [
     "A#B",

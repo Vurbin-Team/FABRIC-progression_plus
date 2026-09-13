@@ -2,10 +2,5 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "progression-plus:item/yellow_skint_crystal"
-  },
-  "display": {
-    "head": {
-      "translation": [ 0, 14, -5 ]
-    }
   }
 }

@@ -23,7 +23,7 @@ public class DamageEventHandler {
         // Если урон был уменьшен, применяем его вручную
         if (reducedDamage != damageAmount) {
             // Отменяем оригинальный урон
-            player.damage(player.getServerWorld() ,damageSource, reducedDamage);
+            player.damage(damageSource, reducedDamage);
             Progressionplus.LOGGER.info("Player {} took reduced damage: {} (original: {})", player.getName().getString(), reducedDamage, damageAmount);
             return false; // Блокируем оригинальный урон
         }

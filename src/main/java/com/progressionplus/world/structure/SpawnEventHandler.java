@@ -89,7 +89,7 @@ public class SpawnEventHandler {
             }
 
             StructureTemplate template = new StructureTemplate();
-            template.readNbt(world.getRegistryManager().getOrThrow(RegistryKeys.BLOCK), nbt);
+            template.readNbt(world.getRegistryManager().getWrapperOrThrow(RegistryKeys.BLOCK), nbt);
 
             int structureWidth = 21;
             int structureHeight = 11;

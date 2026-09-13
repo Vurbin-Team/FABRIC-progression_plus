@@ -9,8 +9,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -38,7 +36,7 @@ public class ModBlocks {
                     .mapColor(MapColor.WHITE_GRAY)
                     .strength(3f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.IRON));
+                    .sounds(BlockSoundGroup.METAL));
 
     public static final Block YELLOW_SKINT_CRYSTAL = registerBlock(
             "yellow_skint_crystal",
@@ -68,30 +66,29 @@ public class ModBlocks {
 
 
     private static Block registerBlock(String name, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
-        RegistryKey<Block> key = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Progressionplus.MOD_ID, name));
-        Block block = factory.apply(settings.registryKey(key));
-        registerBlockItem(name, block);
+        Identifier id = Identifier.of(Progressionplus.MOD_ID, name);
+        Block block = factory.apply(settings);
+        registerBlockItem(id, block);
 
-        return Registry.register(Registries.BLOCK, key, block);
+        return Registry.register(Registries.BLOCK, id, block);
     }
 
-    private static void registerBlockItem(String name, Block block) {
-        RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(Progressionplus.MOD_ID, name));
-        BlockItem item = new BlockItem(block, new Item.Settings().registryKey(key));
-        Registry.register(Registries.ITEM, key, item);
+    private static void registerBlockItem(Identifier id, Block block) {
+        BlockItem item = new BlockItem(block, new Item.Settings());
+        Registry.register(Registries.ITEM, id, item);
     }
 
     public static void register() {
         Progressionplus.LOGGER.info("Mod Blocks registered successfully!");
 
         ItemGroupEvents.modifyEntriesEvent(ModItemGroups.PROGRESSION_PLUS_GROUP).register((entries) -> {
-                entries.add(ModBlocks.DEEPSLATE_TITANIUM_ORE_BLOCK);
-                entries.add(ModBlocks.YELLOW_SKINT_BLOCK);
-                entries.add(ModBlocks.YELLOW_SKINT_CRYSTAL);
-                entries.add(ModBlocks.SKINT_BRICKS);
-                entries.add(ModBlocks.EXPERIENCE_STORAGE_PEDESTAL);
-                entries.add(ModBlocks.TITANIUM_BLOCK);
-            }
+                    entries.add(ModBlocks.DEEPSLATE_TITANIUM_ORE_BLOCK);
+                    entries.add(ModBlocks.YELLOW_SKINT_BLOCK);
+                    entries.add(ModBlocks.YELLOW_SKINT_CRYSTAL);
+                    entries.add(ModBlocks.SKINT_BRICKS);
+                    entries.add(ModBlocks.EXPERIENCE_STORAGE_PEDESTAL);
+                    entries.add(ModBlocks.TITANIUM_BLOCK);
+                }
         );
 
     }

@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": "progression-plus:titanium_ingot",
-    "S": "minecraft:stick"
+    "R": {
+      "item": "progression-plus:titanium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "pattern": [
     "R",

@@ -2,7 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": "progression-plus:yellow_skint_block"
+    "R": {
+      "item": "progression-plus:yellow_skint_block"
+    }
   },
   "pattern": [
     "RR",

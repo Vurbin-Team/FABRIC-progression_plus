@@ -1,6 +1,16 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_amethyst_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:amethyst_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_echo_shard": {
       "conditions": {
         "items": [
@@ -41,16 +51,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_resin_clump": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:resin_clump"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "progression-plus:grand_exp_bottle"
@@ -65,7 +65,7 @@
       "has_experience_bottle",
       "has_echo_shard",
       "has_nether_wart",
-      "has_resin_clump"
+      "has_amethyst_shard"
     ]
   ],
   "rewards": {

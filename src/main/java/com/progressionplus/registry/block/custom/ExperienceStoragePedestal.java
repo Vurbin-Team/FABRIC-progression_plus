@@ -22,6 +22,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -192,8 +193,8 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
     }
 
     @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
-                                         PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos,
+                                             PlayerEntity player, Hand hand, BlockHitResult hit) {
         // Всегда работаем с нижней частью блока
         ExperienceStoragePedestalEntity pedestalBlockEntity = getPedestalEntity(world, pos, state);
 
@@ -201,7 +202,7 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
             // Если зажат Shift - не обрабатываем здесь, пусть обрабатывает onUse
             if (player.isSneaking()) {
                 onUse(state, world, pos, player ,hit);
-                return ActionResult.SUCCESS;
+                return ItemActionResult.SUCCESS;
             }
 
             if(pedestalBlockEntity.isEmpty() && !stack.isEmpty()) {
@@ -231,7 +232,7 @@ public class ExperienceStoragePedestal extends BlockWithEntity implements BlockE
             }
         }
 
-        return ActionResult.SUCCESS;
+        return ItemActionResult.SUCCESS;
     }
 
     // Вспомогательный метод для обновления обеих частей блока

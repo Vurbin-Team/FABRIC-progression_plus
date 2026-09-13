@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.progressionplus.mixin.client",
+  "package": "com.progressionplus.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
   ],

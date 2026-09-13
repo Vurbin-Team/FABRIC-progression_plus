@@ -225,7 +225,7 @@ public class UpgradeMenu extends Screen {
         renderDefenses(context);
         renderBonusIndicators(context);
 
-        context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE,
+        context.drawTexture( BACKGROUND_TEXTURE,
                 mainBgX, mainBgY, 0, 0,
                 mainBgWidth, mainBgHeight,
                 mainBgWidth, mainBgHeight);
@@ -382,7 +382,7 @@ public class UpgradeMenu extends Screen {
     //  ---------------------  render custom player card ---------------------
     private void renderCustomPlayerCard(DrawContext context, int mouseX, int mouseY) {
         // Draw card background
-        context.drawTexture(RenderLayer::getGuiTextured, CARD_BACKGROUND_TEXTURE,
+        context.drawTexture( CARD_BACKGROUND_TEXTURE,
                 cardBgX, cardBgY, 0, 0,
                 cardBgWidth, cardBgHeight,
                 cardBgWidth, cardBgHeight);
@@ -558,13 +558,13 @@ public class UpgradeMenu extends Screen {
         float k = entity.bodyYaw;
         float l = entity.getYaw();
         float m = entity.getPitch();
-        float n = entity.lastHeadYaw;
+        float n = entity.prevHeadYaw;
         float o = entity.headYaw;
         entity.bodyYaw = 180.0F + i * Layout.ENTITY_BODY_YAW_FACTOR;
         entity.setYaw(180.0F + i * Layout.ENTITY_HEAD_YAW_FACTOR);
         entity.setPitch(-j * Layout.ENTITY_TILT_DEGREES);
         entity.headYaw = entity.getYaw();
-        entity.lastHeadYaw = entity.getYaw();
+        entity.prevHeadYaw = entity.getYaw();
         float p = entity.getScale();
         Vector3f vector3f = new Vector3f(0.0F, entity.getHeight() / 2.0F + f * p, Layout.ENTITY_DEPTH);
         float q = (float)size / p;
@@ -572,7 +572,7 @@ public class UpgradeMenu extends Screen {
         entity.bodyYaw = k;
         entity.setYaw(l);
         entity.setPitch(m);
-        entity.lastHeadYaw = n;
+        entity.prevHeadYaw = n;
         entity.headYaw = o;
         context.disableScissor();
     }

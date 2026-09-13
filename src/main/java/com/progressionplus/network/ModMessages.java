@@ -80,7 +80,7 @@ public class ModMessages {
                 float bonusHealth = UpgradeConfig.getSettings(UpgradeType.ENDURANCE).bonusPerLevel * level;
                 float newMaxHealth = 20 + bonusHealth;
 
-                var healthAttribute = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
+                var healthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
                 if (healthAttribute != null) {
                     healthAttribute.setBaseValue(newMaxHealth);
                     // Восстанавливаем здоровье до максимума только если текущее здоровье меньше нового максимума
@@ -93,7 +93,7 @@ public class ModMessages {
                 float damageBonusPerLevel = UpgradeConfig.getSettings(UpgradeType.STRENGTH).bonusPerLevel * level;
                 double bonusDamage = damageBonusPerLevel * damage;
 
-                var damageAttribute = player.getAttributeInstance(EntityAttributes.ATTACK_DAMAGE);
+                var damageAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
                 if (damageAttribute != null) {
                     damageAttribute.setBaseValue(damage + bonusDamage);
                 }
@@ -102,7 +102,7 @@ public class ModMessages {
                 float speedBonusPerLevel = UpgradeConfig.getSettings(UpgradeType.AGILITY).bonusPerLevel * level;
                 double bonusSpeed = speedBonusPerLevel * movement_speed;
 
-                var speedAttribute = player.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED);
+                var speedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (speedAttribute != null) {
                     speedAttribute.setBaseValue(movement_speed + bonusSpeed);
                 }
@@ -111,7 +111,7 @@ public class ModMessages {
                 // Handle LUCK upgrade
                 double bonusLuck = UpgradeConfig.getSettings(UpgradeType.LUCK).bonusPerLevel * level;
 
-                var luckAttribute = player.getAttributeInstance(EntityAttributes.LUCK);
+                var luckAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_LUCK);
                 if (luckAttribute != null) {
                     luckAttribute.setBaseValue(bonusLuck);
                 }
@@ -120,7 +120,7 @@ public class ModMessages {
                 float miningSpeedBonusPerLevel = UpgradeConfig.getSettings(UpgradeType.MINING_SPEED).bonusPerLevel * level;
                 double bonusMiningSpeed = miningSpeedBonusPerLevel * mining_speed;
 
-                var miningSpeedAttribute = player.getAttributeInstance(EntityAttributes.BLOCK_BREAK_SPEED);
+                var miningSpeedAttribute = player.getAttributeInstance(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED);
                 if (miningSpeedAttribute != null) {
                     miningSpeedAttribute.setBaseValue(mining_speed + bonusMiningSpeed);
                 }

@@ -34,7 +34,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                         "has_glow_ink_sac",
                         "has_echo_shard",
                         "has_nether_wart",
-                        "has_resin_clump",
+                        "has_amethyst_shard",
                         "has_glass_bottle",
                         "has_experience_bottle"
                 })
@@ -62,10 +62,10 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                 .criterion("has_glow_ink_sac", InventoryChangedCriterion.Conditions.items(Items.GLOW_INK_SAC))
                 .criterion("has_echo_shard", InventoryChangedCriterion.Conditions.items(Items.ECHO_SHARD))
                 .criterion("has_nether_wart", InventoryChangedCriterion.Conditions.items(Items.NETHER_WART))
-                .criterion("has_resin_clump", InventoryChangedCriterion.Conditions.items(Items.RESIN_CLUMP))
+                .criterion("has_amethyst_shard", InventoryChangedCriterion.Conditions.items(Items.AMETHYST_SHARD))
                 .criterion("has_glass_bottle", InventoryChangedCriterion.Conditions.items(Items.GLASS_BOTTLE))
                 .criterion("has_experience_bottle", InventoryChangedCriterion.Conditions.items(Items.EXPERIENCE_BOTTLE))
-                .rewards(net.minecraft.advancement.AdvancementRewards.Builder.recipe(grandExpBottleRecipeKey)).requirements(
+                .rewards(net.minecraft.advancement.AdvancementRewards.Builder.recipe(Identifier.of("grand_exp_bottle"))).requirements(
                         requirements
                 )
                 .build(consumer, "grand_exp_bottle");
