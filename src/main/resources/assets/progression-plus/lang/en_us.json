@@ -35,7 +35,7 @@
   "upgrade.progression-plus.required_exp": "Next Level Experience",
 
   "item.progression-plus.grand_exp_bottle": "Grand EXP Bottle",
-  "item.progression-plus.deepslate_titanium_ore_block": "Deepslate Titanium Ore Block",
+  "block.progression-plus.deepslate_titanium_ore_block": "Deepslate Titanium Ore Block",
   "item.progression-plus.raw_titanium_ore": "Raw Titanium Ore",
   "item.progression-plus.titanium_ingot": "Titanium Ingot",
   "item.progression-plus.titanium_helmet": "Titanium Helmet",
@@ -50,10 +50,10 @@
   "item.progression-plus.deepslate_handle": "Deepslate Handle",
   "item.progression-plus.yellow_skint_crystal_shard_2": "Skint Crystal Shard",
   "block.progression-plus.experience_storage_pedestal": "Experience Storage Pedestal",
-  "item.progression-plus.yellow_skint_block": "Skint Block",
-  "item.progression-plus.yellow_skint_crystal": "Skint Crystal",
-  "item.progression-plus.skint_bricks": "Skint Bricks",
-  "item.progression-plus.titanium_block": "Titanium Block",
+  "block.progression-plus.yellow_skint_block": "Skint Block",
+  "block.progression-plus.yellow_skint_crystal": "Skint Crystal",
+  "block.progression-plus.skint_bricks": "Skint Bricks",
+  "block.progression-plus.titanium_block": "Titanium Block",
   "item.progression-plus.charged_titanium_sword": "Charged Titanium Sword",
   "item.progression-plus.skint_core": "Skint Core",
 
@@ -61,8 +61,6 @@
   "advancement.progression-plus.grand_exp_bottle_recipe.description": "Unlock the Grand EXP Bottle recipe",
 
   "sounds.progression-plus.button_upgrade": "Button Upgrade Sound",
-
-  "block.progression-plus.deepslate_titanium_ore_block": "Deepslate Titanium Ore Block",
 
   "message.progression-plus.experience_stored": "Experience stored: ",
   "message.progression-plus.experience_retrieved": "Experience retrieved!",

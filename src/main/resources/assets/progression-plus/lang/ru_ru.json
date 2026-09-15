@@ -34,7 +34,7 @@
   "upgrade.progression-plus.required_exp": "След. уровень",
 
   "item.progression-plus.grand_exp_bottle": "Большая бутылка опыта",
-  "item.progression-plus.deepslate_titanium_ore_block": "Блок глубинного титана",
+  "block.progression-plus.deepslate_titanium_ore_block": "Блок глубинного титана",
   "item.progression-plus.raw_titanium_ore": "Рудный титан",
   "item.progression-plus.titanium_ingot": "Титановый слиток",
   "item.progression-plus.titanium_helmet": "Титановый шлем",
@@ -49,10 +49,10 @@
   "item.progression-plus.deepslate_handle": "Ручка из глубинного сланца",
   "item.progression-plus.yellow_skint_crystal_shard_2": "Кристалл скинта",
   "block.progression-plus.experience_storage_pedestal": "Пьедестал для хранения опыт",
-  "item.progression-plus.titanium_block": "Титановый блок",
-  "item.progression-plus.yellow_skint_block": "Блок скинта",
-  "item.progression-plus.yellow_skint_crystal": "Кластер скинта",
-  "item.progression-plus.skint_bricks": "Скинтовый кирпич",
+  "block.progression-plus.titanium_block": "Титановый блок",
+  "block.progression-plus.yellow_skint_block": "Блок скинта",
+  "block.progression-plus.yellow_skint_crystal": "Кластер скинта",
+  "block.progression-plus.skint_bricks": "Скинтовый кирпич",
   "item.progression-plus.charged_titanium_sword": "Заряженый титановый меч",
   "item.progression-plus.skint_core": "Скинтовое ядро",
 
@@ -60,8 +60,6 @@
   "advancement.progression-plus.grand_exp_bottle_recipe.description": "Создайте большую бутылку опыта.",
 
   "sounds.progression-plus.button_upgrade": "Звук кнопки прокачки",
-
-  "block.progression-plus.deepslate_titanium_ore_block": "Блок глубинного титана",
 
   "message.progression-plus.experience_stored": "Сохранено опыта: ",
   "message.progression-plus.experience_retrieved": "Опыт получен!",
